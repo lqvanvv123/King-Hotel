@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập - King Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="auth-shell-body">
+    <div class="auth-shell-grid">
+      <section class="auth-brand-panel">
+        <a href="index.html" class="auth-brand-link">
+          <i class="bi bi-buildings-fill"></i> King Hotel
+        </a>
+
+        <span class="admin-chip auth-brand-chip">
+          <i class="bi bi-shield-check"></i> Hệ thống quản lý và đặt phòng
+        </span>
+
+        <h1 class="auth-brand-title">
+          Dịch vụ đặt phòng khách sạn xin kính chào quý khách!
+        </h1>
+      </section>
+
+      <section class="auth-form-panel">
+        <div class="auth-form-card auth-form-card-wide">
+          <div class="auth-form-head">
+            <span class="auth-form-kicker">Welcome back</span>
+            <h2>Đăng nhập</h2>
+            <p>Nhập tài khoản để tiếp tục vào hệ thống King Hotel.</p>
+          </div>
+
+          <div id="loginMessage" class="alert d-none"></div>
+
+          <form id="loginForm" class="auth-modern-form">
+            <div class="mb-3">
+              <label for="loginIdentifier" class="form-label"
+                >Tài khoản / Email</label
+              >
+              <div class="input-group auth-input-group">
+                <span class="input-group-text"
+                  ><i class="bi bi-person-circle"></i
+                ></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="loginIdentifier"
+                  placeholder="Nhập admin hoặc email đã đăng ký"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label">Mật khẩu</label>
+              <div class="input-group auth-input-group">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="loginPassword"
+                  placeholder="Nhập mật khẩu"
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" class="btn auth-submit-btn w-100 mt-2">
+              <i class="bi bi-box-arrow-in-right"></i> Đăng nhập ngay
+            </button>
+          </form>
+
+          <div class="auth-divider"><span>hoặc</span></div>
+
+          <div class="auth-form-footer text-center">
+            <p class="mb-2 text-muted">Bạn chưa có tài khoản khách hàng?</p>
+            <a
+              href="register.html"
+              class="btn btn-outline-primary auth-secondary-btn w-100"
+            >
+              <i class="bi bi-person-plus"></i> Tạo tài khoản để đặt phòng
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="js/auth.js"></script>
+  </body>
+</html>

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - King Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="admin-page-body">
+    <nav class="navbar navbar-expand-lg navbar-dark admin-navbar sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          <i class="bi bi-buildings"></i> King Hotel Admin
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="bi bi-house-door"></i> Trang chủ
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="rooms.html">
+                <i class="bi bi-door-open"></i> Phòng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="customers.html">
+                <i class="bi bi-people"></i> Khách hàng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookings.html">
+                <i class="bi bi-calendar-check"></i> Đặt phòng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="dashboard.html">
+                <i class="bi bi-bar-chart-line"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item" id="loginNavItem">
+              <a class="nav-link" href="login.html">
+                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+              </a>
+            </li>
+            <li class="nav-item" id="registerNavItem">
+              <a class="nav-link" href="register.html">
+                <i class="bi bi-person-plus"></i> Đăng ký
+              </a>
+            </li>
+            <li class="nav-item d-none" id="logoutNavItem">
+              <a class="nav-link" href="#" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                <span id="userNameNav" class="small"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="admin-subhero">
+      <div class="container">
+        <span class="admin-chip"
+          ><i class="bi bi-bar-chart-line"></i> Tổng quan vận hành</span
+        >
+        <h1 class="admin-subhero-title">Dashboard</h1>
+        <p class="admin-subhero-text">
+          Theo dõi check-in, check-out và doanh thu
+        </p>
+        <div class="admin-subhero-actions">
+          <a href="bookings.html" class="btn btn-warning btn-lg"
+            ><i class="bi bi-calendar-plus"></i> Tạo booking mới</a
+          >
+          <a href="rooms.html" class="btn btn-light btn-lg"
+            ><i class="bi bi-door-open"></i> Xem phòng</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-page-content">
+      <div class="container">
+        <section class="admin-stats-grid">
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon bg-primary-subtle text-primary">
+              <i class="bi bi-building"></i>
+            </div>
+            <div>
+              <p class="admin-stat-label">Tổng số phòng</p>
+              <h3 id="totalRooms">0</h3>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon bg-success-subtle text-success">
+              <i class="bi bi-door-open"></i>
+            </div>
+            <div>
+              <p class="admin-stat-label">Phòng trống</p>
+              <h3 id="availableRooms">0</h3>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon bg-warning-subtle text-warning">
+              <i class="bi bi-person-workspace"></i>
+            </div>
+            <div>
+              <p class="admin-stat-label">Đang ở</p>
+              <h3 id="occupiedRooms">0</h3>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon bg-info-subtle text-info">
+              <i class="bi bi-clock-history"></i>
+            </div>
+            <div>
+              <p class="admin-stat-label">Đang hoạt động</p>
+              <h3 id="todayCheckins">0</h3>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon bg-dark-subtle text-dark">
+              <i class="bi bi-journal-check"></i>
+            </div>
+            <div>
+              <p class="admin-stat-label">Tổng booking</p>
+              <h3 id="totalBookings">0</h3>
+            </div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon bg-danger-subtle text-danger">
+              <i class="bi bi-cash-stack"></i>
+            </div>
+            <div>
+              <p class="admin-stat-label">Doanh thu tháng</p>
+              <h3 id="monthlyRevenue">0</h3>
+            </div>
+          </div>
+        </section>
+
+        <section class="row g-4 mb-4">
+          <div class="col-lg-8">
+            <div class="admin-panel h-100">
+              <div class="admin-panel-header">
+                <div>
+                  <h4 class="mb-1">Đơn đặt phòng đang hoạt động</h4>
+                  <p class="admin-panel-muted mb-0">
+                    Các booking đã xác nhận hoặc đang lưu trú cần theo dõi ngay.
+                  </p>
+                </div>
+                <div
+                  class="badge bg-light text-dark border"
+                  id="dashboardActiveCount"
+                >
+                  0 đơn
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="table align-middle admin-table">
+                  <thead>
+                    <tr>
+                      <th>Khách hàng</th>
+                      <th>Phòng</th>
+                      <th>Ngày nhận</th>
+                      <th>Ngày trả</th>
+                      <th>Tổng tiền</th>
+                      <th>Trạng thái</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody id="activeBookingsTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="admin-panel mb-4">
+              <div class="admin-panel-header">
+                <div>
+                  <h4 class="mb-1">Thông tin nhanh</h4>
+                  <p class="admin-panel-muted mb-0">
+                    Một số số liệu quan trọng trong ngày.
+                  </p>
+                </div>
+              </div>
+              <div class="system-overview">
+                <div class="system-overview-item">
+                  <span>Tổng doanh thu</span
+                  ><strong id="totalRevenue">0</strong>
+                </div>
+                <div class="system-overview-item">
+                  <span>Cập nhật gần nhất</span
+                  ><strong id="dashboardLatestRefresh">--:--</strong>
+                </div>
+                <div class="system-overview-item">
+                  <span>Hệ thống booking</span><strong>Đang hoạt động</strong>
+                </div>
+              </div>
+            </div>
+            <div class="admin-panel">
+              <div class="admin-panel-header">
+                <div>
+                  <h4 class="mb-1">Lối tắt quản trị</h4>
+                  <p class="admin-panel-muted mb-0">
+                    Đi nhanh đến các chức năng chính.
+                  </p>
+                </div>
+              </div>
+              <div class="quick-action-list">
+                <a href="rooms.html" class="quick-action-item"
+                  ><span
+                    class="quick-action-icon text-primary bg-primary-subtle"
+                    ><i class="bi bi-door-open"></i
+                  ></span>
+                  <div>
+                    <strong>Quản lý phòng</strong>
+                    <p class="mb-0">Cập nhật trạng thái và giá bán</p>
+                  </div></a
+                >
+                <a href="customers.html" class="quick-action-item"
+                  ><span
+                    class="quick-action-icon text-success bg-success-subtle"
+                    ><i class="bi bi-people"></i
+                  ></span>
+                  <div>
+                    <strong>Khách hàng</strong>
+                    <p class="mb-0">Xem hồ sơ và chỉnh sửa thông tin</p>
+                  </div></a
+                >
+                <a href="bookings.html" class="quick-action-item"
+                  ><span
+                    class="quick-action-icon text-warning bg-warning-subtle"
+                    ><i class="bi bi-calendar-check"></i
+                  ></span>
+                  <div>
+                    <strong>Đặt phòng</strong>
+                    <p class="mb-0">Tạo mới, check-in và check-out</p>
+                  </div></a
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="admin-footer">
+      <div
+        class="container d-flex flex-column flex-md-row justify-content-between gap-2"
+      >
+        <span>© 2026 King Hotel Management</span>
+        <span>Giao diện quản trị đồng bộ</span>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

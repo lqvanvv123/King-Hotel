@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý phòng - King Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="admin-page-body">
+    <nav class="navbar navbar-expand-lg navbar-dark admin-navbar sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          <i class="bi bi-buildings"></i> King Hotel Admin
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="bi bi-house-door"></i> Trang chủ
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="rooms.html">
+                <i class="bi bi-door-open"></i> Phòng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="customers.html">
+                <i class="bi bi-people"></i> Khách hàng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookings.html">
+                <i class="bi bi-calendar-check"></i> Đặt phòng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">
+                <i class="bi bi-bar-chart-line"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item" id="loginNavItem">
+              <a class="nav-link" href="login.html">
+                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+              </a>
+            </li>
+            <li class="nav-item" id="registerNavItem">
+              <a class="nav-link" href="register.html">
+                <i class="bi bi-person-plus"></i> Đăng ký
+              </a>
+            </li>
+            <li class="nav-item d-none" id="logoutNavItem">
+              <a class="nav-link" href="#" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                <span id="userNameNav" class="small"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="admin-subhero">
+      <div class="container">
+        <span class="admin-chip"
+          ><i class="bi bi-door-open"></i> Quản trị phòng lưu trú</span
+        >
+        <h1 class="admin-subhero-title">Quản lý danh sách phòng</h1>
+        <p class="admin-subhero-text">
+          Theo dõi và quản lý thông tin các phòng trong khách sạn.
+        </p>
+        <div class="admin-subhero-actions">
+          <button
+            class="btn btn-warning btn-lg"
+            data-admin-only
+            data-bs-toggle="modal"
+            data-bs-target="#roomModal"
+            onclick="openAddModal()"
+          >
+            <i class="bi bi-plus-circle"></i> Thêm phòng mới
+          </button>
+          <a href="dashboard.html" class="btn btn-light btn-lg">
+            <i class="bi bi-bar-chart-line"></i> Xem dashboard
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-page-content">
+      <div class="container">
+        <section class="admin-mini-stats">
+          <div class="admin-mini-stat">
+            <span class="admin-mini-stat-icon bg-primary-subtle text-primary"
+              ><i class="bi bi-building"></i
+            ></span>
+            <div>
+              <p class="admin-mini-stat-label">Tổng số phòng</p>
+              <strong id="roomTotalCount">0</strong>
+            </div>
+          </div>
+          <div class="admin-mini-stat">
+            <span class="admin-mini-stat-icon bg-success-subtle text-success"
+              ><i class="bi bi-door-open"></i
+            ></span>
+            <div>
+              <p class="admin-mini-stat-label">Phòng còn trống</p>
+              <strong id="roomAvailableCount">0</strong>
+            </div>
+          </div>
+          <div class="admin-mini-stat">
+            <span class="admin-mini-stat-icon bg-warning-subtle text-warning"
+              ><i class="bi bi-person-workspace"></i
+            ></span>
+            <div>
+              <p class="admin-mini-stat-label">Đang có khách</p>
+              <strong id="roomOccupiedCount">0</strong>
+            </div>
+          </div>
+          <div class="admin-mini-stat">
+            <span
+              class="admin-mini-stat-icon bg-secondary-subtle text-secondary"
+              ><i class="bi bi-tools"></i
+            ></span>
+            <div>
+              <p class="admin-mini-stat-label">Bảo trì</p>
+              <strong id="roomMaintenanceCount">0</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel mb-4">
+          <div class="admin-panel-header">
+            <div>
+              <h4 class="mb-1">Bộ lọc danh sách phòng</h4>
+              <p class="admin-panel-muted mb-0">
+                Tìm nhanh theo số phòng, trạng thái hoặc loại phòng.
+              </p>
+            </div>
+            <div class="badge bg-light text-dark border" id="roomResultCount">
+              0 phòng
+            </div>
+          </div>
+          <div class="admin-filter-grid">
+            <div class="admin-filter-col-4">
+              <label class="form-label">Tìm kiếm</label>
+              <div class="admin-search-wrap">
+                <i class="bi bi-search"></i>
+                <input
+                  type="text"
+                  class="form-control admin-search-input"
+                  id="filterKeyword"
+                  placeholder="Nhập số phòng, mô tả, tiện nghi..."
+                />
+              </div>
+            </div>
+            <div class="admin-filter-col-3">
+              <label class="form-label">Trạng thái</label>
+              <select class="form-select" id="filterStatus">
+                <option value="">Tất cả trạng thái</option>
+                <option value="available">Còn trống</option>
+                <option value="booked">Đã đặt</option>
+                <option value="occupied">Đang ở</option>
+                <option value="maintenance">Bảo trì</option>
+              </select>
+            </div>
+            <div class="admin-filter-col-3">
+              <label class="form-label">Loại phòng</label>
+              <select class="form-select" id="filterType">
+                <option value="">Tất cả loại phòng</option>
+                <option value="Standard">Standard</option>
+                <option value="Deluxe">Deluxe</option>
+                <option value="Suite">Suite</option>
+                <option value="Family">Family</option>
+              </select>
+            </div>
+            <div class="admin-filter-col-2 d-flex align-items-end">
+              <button
+                class="btn btn-outline-secondary w-100"
+                onclick="resetFilters()"
+              >
+                <i class="bi bi-arrow-counterclockwise"></i> Xóa lọc
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel">
+          <div class="admin-toolbar">
+            <div>
+              <h4 class="mb-1">Danh sách phòng</h4>
+              <p>Cập nhật trực tiếp giá, trạng thái và nội dung phòng.</p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-middle admin-table">
+              <thead>
+                <tr>
+                  <th>Số phòng</th>
+                  <th>Loại phòng</th>
+                  <th>Giá/đêm</th>
+                  <th>Sức chứa</th>
+                  <th>Trạng thái</th>
+                  <th>Tiện nghi</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="roomsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="modal fade" id="roomModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header admin-modal-header">
+            <h5 class="modal-title" id="modalTitle">Thêm phòng mới</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="roomForm">
+              <input type="hidden" id="roomId" />
+              <div class="admin-form-grid">
+                <div class="admin-form-col-6">
+                  <label class="form-label"
+                    >Số phòng <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="roomNumber"
+                    required
+                  />
+                </div>
+                <div class="admin-form-col-6">
+                  <label class="form-label"
+                    >Loại phòng <span class="text-danger">*</span></label
+                  >
+                  <select class="form-select" id="roomType" required>
+                    <option value="Standard">Standard</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Family">Family</option>
+                  </select>
+                </div>
+                <div class="admin-form-col-4">
+                  <label class="form-label"
+                    >Giá/đêm (VNĐ) <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="pricePerNight"
+                    min="0"
+                    required
+                  />
+                </div>
+                <div class="admin-form-col-4">
+                  <label class="form-label"
+                    >Sức chứa <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="capacity"
+                    min="1"
+                    max="10"
+                    required
+                  />
+                </div>
+                <div class="admin-form-col-4">
+                  <label class="form-label">Trạng thái</label>
+                  <select class="form-select" id="roomStatus">
+                    <option value="available">Còn trống</option>
+                    <option value="booked">Đã đặt</option>
+                    <option value="occupied">Đang ở</option>
+                    <option value="maintenance">Bảo trì</option>
+                  </select>
+                </div>
+                <div class="admin-form-col-12">
+                  <label class="form-label">URL hình ảnh</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="imageUrl"
+                    placeholder="assets/rooms/standard-1.jpg"
+                  />
+                </div>
+                <div class="admin-form-col-12">
+                  <label class="form-label"
+                    >Tiện nghi (cách nhau bằng dấu phẩy)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="amenities"
+                    placeholder="Wifi, TV, Điều hòa, Minibar"
+                  />
+                </div>
+                <div class="admin-form-col-12">
+                  <label class="form-label">Mô tả</label>
+                  <textarea
+                    class="form-control"
+                    id="description"
+                    rows="4"
+                  ></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Hủy
+            </button>
+            <button type="button" class="btn btn-primary" onclick="saveRoom()">
+              Lưu phòng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="roomDetailAdminModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header admin-modal-header">
+            <h5 class="modal-title">
+              <i class="bi bi-eye"></i> Chi tiết phòng
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="roomDetailAdminBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="admin-footer">
+      <div
+        class="container d-flex flex-column flex-md-row justify-content-between gap-2"
+      >
+        <span>© 2026 King Hotel Management</span>
+        <span>Giao diện quản trị đồng bộ</span>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/rooms.js"></script>
+  </body>
+</html>
+ass

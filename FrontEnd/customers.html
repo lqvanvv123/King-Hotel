@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khách hàng - King Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="admin-page-body">
+    <nav class="navbar navbar-expand-lg navbar-dark admin-navbar sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          <i class="bi bi-buildings"></i> King Hotel Admin
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="bi bi-house-door"></i> Trang chủ
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="rooms.html">
+                <i class="bi bi-door-open"></i> Phòng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="customers.html">
+                <i class="bi bi-people"></i> Khách hàng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookings.html">
+                <i class="bi bi-calendar-check"></i> Đặt phòng
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">
+                <i class="bi bi-bar-chart-line"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item" id="loginNavItem">
+              <a class="nav-link" href="login.html">
+                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+              </a>
+            </li>
+            <li class="nav-item" id="registerNavItem">
+              <a class="nav-link" href="register.html">
+                <i class="bi bi-person-plus"></i> Đăng ký
+              </a>
+            </li>
+            <li class="nav-item d-none" id="logoutNavItem">
+              <a class="nav-link" href="#" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                <span id="userNameNav" class="small"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="admin-subhero">
+      <div class="container">
+        <span class="admin-chip"
+          ><i class="bi bi-people"></i> Hồ sơ khách hàng</span
+        >
+        <h1 class="admin-subhero-title">Quản lý danh sách khách hàng</h1>
+        <p class="admin-subhero-text">
+          Theo dõi thông tin liên hệ, số giấy tờ và địa chỉ của khách để phục vụ
+          quy trình đặt phòng và lưu trú.
+        </p>
+        <div class="admin-subhero-actions">
+          <button
+            class="btn btn-warning btn-lg"
+            data-bs-toggle="modal"
+            data-bs-target="#customerModal"
+            onclick="openAddModal()"
+          >
+            <i class="bi bi-person-plus"></i> Thêm khách hàng
+          </button>
+          <a href="bookings.html" class="btn btn-light btn-lg">
+            <i class="bi bi-calendar-check"></i> Tạo booking
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-page-content">
+      <div class="container">
+        <section class="admin-mini-stats">
+          <div class="admin-mini-stat">
+            <span class="admin-mini-stat-icon bg-primary-subtle text-primary"
+              ><i class="bi bi-people-fill"></i
+            ></span>
+            <div>
+              <p class="admin-mini-stat-label">Tổng khách hàng</p>
+              <strong id="customerTotalCount">0</strong>
+            </div>
+          </div>
+          <div class="admin-mini-stat">
+            <span class="admin-mini-stat-icon bg-success-subtle text-success"
+              ><i class="bi bi-envelope-check"></i
+            ></span>
+            <div>
+              <p class="admin-mini-stat-label">Có email</p>
+              <strong id="customerEmailCount">0</strong>
+            </div>
+          </div>
+          <div class="admin-mini-stat">
+            <span class="admin-mini-stat-icon bg-info-subtle text-info"
+              ><i class="bi bi-geo-alt"></i
+            ></span>
+            <div>
+              <p class="admin-mini-stat-label">Có địa chỉ</p>
+              <strong id="customerAddressCount">0</strong>
+            </div>
+          </div>
+          <div class="admin-mini-stat">
+            <span class="admin-mini-stat-icon bg-warning-subtle text-warning"
+              ><i class="bi bi-calendar-plus"></i
+            ></span>
+            <div>
+              <p class="admin-mini-stat-label">Tạo trong tháng</p>
+              <strong id="customerThisMonthCount">0</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel mb-4">
+          <div class="admin-panel-header">
+            <div>
+              <h4 class="mb-1">Tìm kiếm khách hàng</h4>
+              <p class="admin-panel-muted mb-0">
+                Tìm theo họ tên, email, số điện thoại, CCCD hoặc địa chỉ.
+              </p>
+            </div>
+            <div
+              class="badge bg-light text-dark border"
+              id="customerResultCount"
+            >
+              0 khách hàng
+            </div>
+          </div>
+          <div class="admin-filter-grid">
+            <div class="admin-filter-col-6">
+              <label class="form-label">Ô tìm kiếm</label>
+              <div class="admin-search-wrap">
+                <i class="bi bi-search"></i>
+                <input
+                  type="text"
+                  class="form-control admin-search-input"
+                  id="customerKeyword"
+                  placeholder="Nhập từ khóa để lọc danh sách khách hàng"
+                />
+              </div>
+            </div>
+            <div class="admin-filter-col-3 d-flex align-items-end">
+              <button
+                class="btn btn-outline-secondary w-100"
+                onclick="resetCustomerFilter()"
+              >
+                <i class="bi bi-arrow-counterclockwise"></i> Xóa tìm kiếm
+              </button>
+            </div>
+            <div class="admin-filter-col-3">
+              <div class="admin-soft-card h-100">
+                <div class="admin-soft-item">
+                  <span>Cập nhật gần nhất</span
+                  ><strong id="customerUpdatedAt">--:--</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel">
+          <div class="admin-toolbar">
+            <div>
+              <h4 class="mb-1">Danh sách khách hàng</h4>
+              <p>
+                Nhấn sửa để cập nhật hồ sơ hoặc xóa khi dữ liệu không còn dùng
+                nữa.
+              </p>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-middle admin-table">
+              <thead>
+                <tr>
+                  <th>Họ tên</th>
+                  <th>Email</th>
+                  <th>Số điện thoại</th>
+                  <th>CMND/CCCD</th>
+                  <th>Địa chỉ</th>
+                  <th>Ngày tạo</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="customersTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="modal fade" id="customerModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header admin-modal-header">
+            <h5 class="modal-title" id="modalTitle">Thêm khách hàng mới</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="customerForm">
+              <input type="hidden" id="customerId" />
+              <div class="mb-3">
+                <label class="form-label"
+                  >Họ tên <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label"
+                  >Email <span class="text-danger">*</span></label
+                >
+                <input type="email" class="form-control" id="email" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label"
+                  >Số điện thoại <span class="text-danger">*</span></label
+                >
+                <input type="tel" class="form-control" id="phone" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label"
+                  >CMND/CCCD <span class="text-danger">*</span></label
+                >
+                <input type="text" class="form-control" id="idCard" required />
+              </div>
+              <div class="mb-0">
+                <label class="form-label">Địa chỉ</label>
+                <input type="text" class="form-control" id="address" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Hủy
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="saveCustomer()"
+            >
+              Lưu khách hàng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="admin-footer">
+      <div
+        class="container d-flex flex-column flex-md-row justify-content-between gap-2"
+      >
+        <span>© 2026 King Hotel Management</span>
+        <span>Giao diện quản trị đồng bộ</span>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/customers.js"></script>
+  </body>
+</html>

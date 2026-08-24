@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng ký tài khoản - King Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="auth-shell-body auth-shell-register">
+    <div class="auth-shell-grid auth-shell-grid-register">
+      <section class="auth-brand-panel">
+        <a href="indexUser.html" class="auth-brand-link">
+          <i class="bi bi-buildings-fill"></i> King Hotel
+        </a>
+
+        <span class="admin-chip auth-brand-chip">
+          <i class="bi bi-person-heart"></i> Khu vực khách hàng
+        </span>
+
+        <h1 class="auth-brand-title">
+          Tạo tài khoản để tự chọn phòng và theo dõi đặt chỗ của bạn
+        </h1>
+      </section>
+
+      <section class="auth-form-panel">
+        <div class="auth-form-card auth-form-card-register">
+          <div class="auth-form-head">
+            <span class="auth-form-kicker">Create account</span>
+            <h2>Đăng ký tài khoản khách hàng</h2>
+            <p>
+              Điền thông tin bên dưới để bắt đầu sử dụng hệ thống đặt phòng.
+            </p>
+          </div>
+
+          <div id="registerMessage" class="alert d-none"></div>
+
+          <form id="registerForm" class="auth-modern-form">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="registerFullName" class="form-label"
+                  >Họ và tên</label
+                >
+                <div class="input-group auth-input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-person"></i
+                  ></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="registerFullName"
+                    placeholder="Nhập họ và tên"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="registerPhone" class="form-label"
+                  >Số điện thoại</label
+                >
+                <div class="input-group auth-input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-telephone"></i
+                  ></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="registerPhone"
+                    placeholder="Nhập số điện thoại"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="registerEmail" class="form-label">Email</label>
+                <div class="input-group auth-input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-envelope"></i
+                  ></span>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="registerEmail"
+                    placeholder="Nhập email"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="registerIdCard" class="form-label">CMND/CCCD</label>
+                <div class="input-group auth-input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-credit-card-2-front"></i
+                  ></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="registerIdCard"
+                    placeholder="Nhập số giấy tờ"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="registerAddress" class="form-label">Địa chỉ</label>
+                <div class="input-group auth-input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-geo-alt"></i
+                  ></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="registerAddress"
+                    placeholder="Nhập địa chỉ (không bắt buộc)"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="registerPassword" class="form-label"
+                  >Mật khẩu</label
+                >
+                <div class="input-group auth-input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-lock"></i
+                  ></span>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="registerPassword"
+                    placeholder="Tối thiểu 6 ký tự"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="registerConfirmPassword" class="form-label"
+                  >Xác nhận mật khẩu</label
+                >
+                <div class="input-group auth-input-group">
+                  <span class="input-group-text"
+                    ><i class="bi bi-shield-lock"></i
+                  ></span>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="registerConfirmPassword"
+                    placeholder="Nhập lại mật khẩu"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn auth-submit-btn w-100 mt-4">
+              <i class="bi bi-person-check"></i> Tạo tài khoản ngay
+            </button>
+          </form>
+
+          <div class="auth-divider"><span>Bạn đã có tài khoản?</span></div>
+
+          <div class="auth-form-footer text-center">
+            <a
+              href="login.html"
+              class="btn btn-outline-primary auth-secondary-btn w-100"
+            >
+              <i class="bi bi-box-arrow-in-right"></i> Quay lại đăng nhập
+            </a>
+          </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="js/auth.js"></script>
+  </body>
+</html>

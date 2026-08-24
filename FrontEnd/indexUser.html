@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>King Hotel - Trang khách hàng</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="booking-ui-body booking-shell-body">
+    <nav class="navbar navbar-expand-lg booking-navbar sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-white" href="indexUser.html">
+          <i class="bi bi-buildings"></i> KING HOTEL
+        </a>
+        <button
+          class="navbar-toggler text-white border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <li class="nav-item">
+              <a class="nav-link active" href="indexUser.html">
+                <i class="bi bi-house-door"></i> Trang chủ
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="room-list.html">
+                <i class="bi bi-buildings"></i> Xem phòng
+              </a>
+            </li>
+            <li class="nav-item d-none" id="loginNavItem">
+              <a class="nav-link" href="login.html">
+                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+              </a>
+            </li>
+            <li class="nav-item d-none" id="registerNavItem">
+              <a class="nav-link" href="register.html">
+                <i class="bi bi-person-plus"></i> Đăng ký
+              </a>
+            </li>
+            <li class="nav-item" id="logoutNavItem">
+              <a class="nav-link" href="#" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                <span id="userNameNav" class="small d-block d-lg-inline"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="booking-shell-hero customer-home-hero">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <span class="booking-shell-chip">
+              <i class="bi bi-stars"></i> Dịch vụ đặt phòng khách sạn
+            </span>
+            <h1 class="booking-shell-title">
+              Tìm phòng đẹp, đặt nhanh và theo dõi booking ngay trên tài khoản
+              của bạn
+            </h1>
+            <p class="booking-shell-text">
+              Trải nghiệm tìm phòng theo phong cách hiện đại: xem phòng còn
+              trống, chọn ngày linh hoạt, ước tính chi phí tức thì và quản lý
+              lịch sử đặt phòng trong cùng một giao diện thống nhất.
+            </p>
+            <div class="booking-shell-points">
+              <span
+                ><i class="bi bi-check2-circle"></i> Xem phòng còn trống theo
+                ngày</span
+              >
+              <span
+                ><i class="bi bi-check2-circle"></i> Chọn hạng phòng rõ
+                ràng</span
+              >
+              <span
+                ><i class="bi bi-check2-circle"></i> Theo dõi đơn đặt phòng dễ
+                hơn</span
+              >
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="booking-shell-stat-card customer-account-shell">
+              <div
+                class="d-flex justify-content-between align-items-start gap-3 mb-3"
+              >
+                <div>
+                  <p class="booking-mini-label mb-1">Tài khoản đang sử dụng</p>
+                  <h3 class="mb-1" id="profileFullName">-</h3>
+                  <p class="text-muted mb-0" id="profileEmail">-</p>
+                </div>
+                <span class="booking-chip booking-chip-primary"
+                  >Khách hàng</span
+                >
+              </div>
+              <div class="d-flex gap-2 flex-wrap mt-3">
+                <a href="#bookingSearchCard" class="btn booking-primary-btn">
+                  <i class="bi bi-search"></i> Tìm và đặt phòng
+                </a>
+                <a href="#historySection" class="btn booking-outline-btn">
+                  <i class="bi bi-clock-history"></i> Xem lịch sử
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="room-list-search-shell customer-search-shell"
+      id="bookingSearchCard"
+    >
+      <div class="container">
+        <form
+          id="customerBookingForm"
+          class="room-search-card room-search-shell-card customer-search-card"
+          onsubmit="return false;"
+        >
+          <div
+            class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"
+          >
+            <div>
+              <div class="booking-mini-label">Đặt phòng trực tiếp</div>
+              <h2 class="h4 mb-0">Chọn phòng và hoàn tất yêu cầu đặt phòng</h2>
+            </div>
+            <a href="room-list.html" class="btn booking-outline-btn btn-sm">
+              <i class="bi bi-grid-1x2"></i> Mở danh sách phòng
+            </a>
+          </div>
+
+          <div class="row g-3 align-items-end">
+            <div class="col-lg-3 col-md-6">
+              <label class="form-label booking-label">Chọn phòng</label>
+              <select
+                id="customerRoomSelect"
+                class="form-select booking-input"
+                required
+              ></select>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <label class="form-label booking-label">Nhận phòng</label>
+              <input
+                type="date"
+                id="customerCheckInDate"
+                class="form-control booking-input"
+                required
+              />
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <label class="form-label booking-label">Trả phòng</label>
+              <input
+                type="date"
+                id="customerCheckOutDate"
+                class="form-control booking-input"
+                required
+              />
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <label class="form-label booking-label"
+                >Phương thức thanh toán</label
+              >
+              <select
+                id="customerPaymentMethod"
+                class="form-select booking-input"
+              >
+                <option value="Cash">Tiền mặt</option>
+                <option value="Card">Thẻ</option>
+                <option value="Transfer">Chuyển khoản</option>
+              </select>
+            </div>
+            <div class="col-lg-2 col-md-12 d-grid">
+              <button
+                type="button"
+                class="btn booking-outline-btn booking-large-btn"
+                onclick="goToRoomExplorer()"
+              >
+                <i class="bi bi-buildings"></i> Xem phòng
+              </button>
+            </div>
+          </div>
+
+          <div class="booking-summary-bar mt-3 customer-summary-bar">
+            <div>
+              <div class="booking-summary-label">Số đêm dự kiến</div>
+              <div class="booking-summary-value" id="customerEstimatedNights">
+                0 đêm
+              </div>
+            </div>
+            <div>
+              <div class="booking-summary-label">Tổng tiền dự kiến</div>
+              <div class="booking-summary-price" id="customerEstimatedTotal">
+                0 ₫
+              </div>
+            </div>
+            <div class="d-grid">
+              <button
+                form="customerBookingForm"
+                type="submit"
+                class="btn booking-primary-btn booking-large-btn"
+              >
+                <i class="bi bi-send-check"></i> Đặt ngay
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <main class="container booking-shell-main customer-home-main py-4 py-lg-5">
+      <section class="row g-4">
+        <div class="col-lg-8">
+          <div class="booking-section-card customer-feature-card h-100">
+            <div
+              class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"
+            >
+              <div>
+                <div class="booking-mini-label">Gợi ý nổi bật</div>
+                <h2 class="booking-section-title mb-0">
+                  Phòng còn trống hôm nay
+                </h2>
+              </div>
+              <button
+                class="btn booking-outline-btn btn-sm"
+                onclick="loadCustomerRooms()"
+              >
+                <i class="bi bi-arrow-repeat"></i> Tải lại
+              </button>
+            </div>
+            <div class="row g-3" id="customerRoomCards"></div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="booking-section-card customer-side-card mb-4">
+            <div class="booking-mini-label">Hướng dẫn nhanh</div>
+            <h2 class="booking-section-title">Đặt phòng theo 3 bước</h2>
+            <div class="booking-tip-list mt-3">
+              <div class="booking-tip-item">
+                <i class="bi bi-1-circle-fill"></i>
+                <div>
+                  <strong>Chọn ngày trước</strong>
+                  <p>
+                    Hệ thống sẽ tự tính số đêm và hiển thị tổng tiền dự kiến.
+                  </p>
+                </div>
+              </div>
+              <div class="booking-tip-item">
+                <i class="bi bi-2-circle-fill"></i>
+                <div>
+                  <strong>Xem chi tiết từng phòng</strong>
+                  <p>
+                    Mỗi phòng có trang riêng với ảnh, tiện nghi và chính sách rõ
+                    ràng.
+                  </p>
+                </div>
+              </div>
+              <div class="booking-tip-item">
+                <i class="bi bi-3-circle-fill"></i>
+                <div>
+                  <strong>Theo dõi lịch sử booking</strong>
+                  <p>
+                    Toàn bộ đơn đặt phòng của bạn sẽ hiển thị trong bảng bên
+                    dưới.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="booking-section-card customer-side-card">
+            <div class="booking-mini-label">Tiện ích mở rộng</div>
+            <h2 class="booking-section-title">Khám phá thêm</h2>
+            <div class="customer-link-list mt-3">
+              <a href="room-list.html" class="customer-link-item">
+                <span class="customer-link-icon text-primary bg-primary-subtle"
+                  ><i class="bi bi-grid-1x2"></i
+                ></span>
+                <div>
+                  <strong>Danh sách phòng</strong>
+                  <p class="mb-0">
+                    Xem phòng theo bộ lọc kiểu trang OTA hiện đại.
+                  </p>
+                </div>
+              </a>
+              <a
+                href="room-detail.html"
+                class="customer-link-item"
+                onclick="
+                  event.preventDefault();
+                  goToRoomExplorer();
+                "
+              >
+                <span class="customer-link-icon text-success bg-success-subtle"
+                  ><i class="bi bi-images"></i
+                ></span>
+                <div>
+                  <strong>Ảnh và tiện nghi</strong>
+                  <p class="mb-0">
+                    Mở danh sách phòng để xem trang chi tiết từng hạng phòng.
+                  </p>
+                </div>
+              </a>
+              <a href="#historySection" class="customer-link-item">
+                <span class="customer-link-icon text-warning bg-warning-subtle"
+                  ><i class="bi bi-clock-history"></i
+                ></span>
+                <div>
+                  <strong>Lịch sử của bạn</strong>
+                  <p class="mb-0">
+                    Kiểm tra tình trạng đơn đã xác nhận, đang ở hoặc đã trả
+                    phòng.
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="booking-section-card mt-4 customer-history-card"
+        id="historySection"
+      >
+        <div
+          class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"
+        >
+          <div>
+            <div class="booking-mini-label">Lịch sử cá nhân</div>
+            <h2 class="booking-section-title mb-0">Booking của bạn</h2>
+          </div>
+          <button
+            class="btn booking-outline-btn btn-sm"
+            onclick="loadCustomerBookings()"
+          >
+            <i class="bi bi-arrow-repeat"></i> Tải lại
+          </button>
+        </div>
+
+        <div class="table-responsive booking-table-wrap">
+          <table class="table align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Phòng</th>
+                <th>Loại</th>
+                <th>Nhận phòng</th>
+                <th>Trả phòng</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="customerBookingsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/user-booking.js"></script>
+  </body>
+</html>

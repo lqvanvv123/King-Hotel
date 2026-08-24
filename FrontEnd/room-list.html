@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh sách phòng - King Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="booking-ui-body booking-shell-body">
+    <nav class="navbar navbar-expand-lg booking-navbar sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-white" href="indexUser.html">
+          <i class="bi bi-buildings"></i> KING HOTEL
+        </a>
+        <button
+          class="navbar-toggler text-white border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <li class="nav-item">
+              <a class="nav-link" href="indexUser.html"
+                ><i class="bi bi-house-door"></i> Trang chủ</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="room-list.html"
+                ><i class="bi bi-buildings"></i> Xem phòng</a
+              >
+            </li>
+            <li class="nav-item d-none" id="loginNavItem">
+              <a class="nav-link" href="login.html"
+                ><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</a
+              >
+            </li>
+            <li class="nav-item d-none" id="registerNavItem">
+              <a class="nav-link" href="register.html"
+                ><i class="bi bi-person-plus"></i> Đăng ký</a
+              >
+            </li>
+            <li class="nav-item d-none" id="logoutNavItem">
+              <a class="nav-link" href="#" onclick="logout()"
+                ><i class="bi bi-box-arrow-right"></i> Đăng xuất
+                <span id="userNameNav" class="small"></span
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="booking-shell-hero">
+      <div class="container">
+        <span class="booking-shell-chip">
+          <i class="bi bi-stars"></i> Tìm phòng
+        </span>
+        <div class="row g-4 align-items-end">
+          <div class="col-lg-7">
+            <h1 class="booking-shell-title">
+              Chọn hạng phòng phù hợp cho kỳ nghỉ của bạn
+            </h1>
+            <p class="booking-shell-text">
+              Xem nhanh giá, sức chứa, tiện nghi, ảnh phòng và chính sách đặt
+              phòng ngay trên một giao diện rõ ràng, hiện đại.
+            </p>
+            <div class="booking-shell-points">
+              <span><i class="bi bi-check2-circle"></i> Có ảnh chi tiết</span>
+              <span
+                ><i class="bi bi-check2-circle"></i> Lọc theo loại phòng</span
+              >
+              <span
+                ><i class="bi bi-check2-circle"></i> Chọn phòng chỉ với 1 lần
+                bấm</span
+              >
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="booking-shell-stat-card">
+              <div>
+                <p class="booking-mini-label mb-1">Tìm phòng</p>
+                <h3 class="mb-1">Nhanh, gọn, trực quan</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="room-list-search-shell">
+      <div class="container">
+        <div class="room-search-card room-search-shell-card">
+          <div class="row g-3 align-items-end">
+            <div class="col-lg-2 col-md-6">
+              <label class="form-label booking-label">Nhận phòng</label>
+              <input
+                type="date"
+                id="searchCheckIn"
+                class="form-control booking-input"
+              />
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <label class="form-label booking-label">Trả phòng</label>
+              <input
+                type="date"
+                id="searchCheckOut"
+                class="form-control booking-input"
+              />
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <label class="form-label booking-label">Loại phòng</label>
+              <select id="filterType" class="form-select booking-input">
+                <option value="">Tất cả</option>
+                <option value="Standard">Standard</option>
+                <option value="Deluxe">Deluxe</option>
+                <option value="Suite">Suite</option>
+                <option value="Family">Family</option>
+              </select>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <label class="form-label booking-label">Sức chứa</label>
+              <select id="filterCapacity" class="form-select booking-input">
+                <option value="">Tất cả</option>
+                <option value="1">1+ khách</option>
+                <option value="2">2+ khách</option>
+                <option value="3">3+ khách</option>
+                <option value="4">4+ khách</option>
+              </select>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <label class="form-label booking-label">Sắp xếp</label>
+              <select id="sortBy" class="form-select booking-input">
+                <option value="recommended">Đề xuất</option>
+                <option value="priceAsc">Giá tăng dần</option>
+                <option value="priceDesc">Giá giảm dần</option>
+                <option value="sizeDesc">Diện tích lớn nhất</option>
+              </select>
+            </div>
+            <div class="col-lg-2 col-md-6 d-grid">
+              <button
+                class="btn booking-primary-btn booking-large-btn"
+                onclick="loadRoomList()"
+              >
+                <i class="bi bi-search"></i> Tìm phòng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="container booking-shell-main py-4 py-lg-5">
+      <div class="row g-4">
+        <div class="col-lg-3">
+          <aside
+            class="booking-filter-card room-filter-shell sticky-lg-top"
+            style="top: 94px"
+          >
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <div class="booking-mini-label">Tùy chỉnh kết quả</div>
+                <h2 class="h5 mb-0">Bộ lọc phòng</h2>
+              </div>
+              <button
+                class="btn btn-link p-0 text-decoration-none"
+                onclick="resetRoomFilters()"
+              >
+                Đặt lại
+              </button>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label booking-label"
+                >Mức giá tối đa / đêm</label
+              >
+              <select id="filterPrice" class="form-select booking-input">
+                <option value="">Tất cả</option>
+                <option value="600000">Dưới 600.000đ</option>
+                <option value="900000">Dưới 900.000đ</option>
+                <option value="1200000">Dưới 1.200.000đ</option>
+                <option value="2000000">Dưới 2.000.000đ</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label booking-label">View phòng</label>
+              <select id="filterView" class="form-select booking-input">
+                <option value="">Tất cả</option>
+                <option value="City">City</option>
+                <option value="Garden">Garden</option>
+                <option value="Pool">Pool</option>
+                <option value="Sea">Sea</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label booking-label">Bữa sáng</label>
+              <select id="filterBreakfast" class="form-select booking-input">
+                <option value="">Tất cả</option>
+                <option value="true">Có bao gồm</option>
+                <option value="false">Không bao gồm</option>
+              </select>
+            </div>
+
+            <div class="room-filter-note">
+              <i class="bi bi-info-circle"></i>
+              Gợi ý: lọc theo ngày trước để kết quả sát nhu cầu đặt phòng hơn.
+            </div>
+
+            <button
+              class="btn booking-primary-btn w-100 mt-3"
+              onclick="loadRoomList()"
+            >
+              <i class="bi bi-funnel"></i> Áp dụng bộ lọc
+            </button>
+          </aside>
+        </div>
+
+        <div class="col-lg-9">
+          <div class="booking-results-toolbar booking-results-toolbar-shell">
+            <div>
+              <div class="booking-mini-label">Kết quả tìm kiếm</div>
+              <h2 class="booking-section-title mb-0">
+                Danh sách phòng còn trống
+              </h2>
+            </div>
+            <div class="booking-results-meta" id="roomListMeta">
+              Đang tải danh sách phòng...
+            </div>
+          </div>
+          <div id="roomListContainer" class="d-grid gap-3"></div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/room-list.js"></script>
+  </body>
+</html>

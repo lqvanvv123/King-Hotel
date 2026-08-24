@@ -1,0 +1,374 @@
+[
+  {
+    "roomNumber": "102",
+    "type": "Standard",
+    "pricePerNight": 480000,
+    "capacity": 2,
+    "floor": 1,
+    "sizeSqm": 24,
+    "bedType": "Double",
+    "view": "City",
+    "amenities": [
+      "WiFi",
+      "TV",
+      "Máy lạnh",
+      "Nước nóng",
+      "Bàn làm việc"
+    ],
+    "images": [
+      "assets/rooms/standard-1.jpg",
+      "assets/rooms/standard-2.jpg",
+      "assets/rooms/standard-3.jpg",
+      "assets/rooms/standard-4.jpg"
+    ],
+    "status": "available",
+    "description": "Phòng Standard phù hợp cho 2 khách, không gian gọn gàng, thoáng mát.",
+    "imageUrl": "assets/rooms/standard-1.jpg",
+    "discountPercent": 5,
+    "isSmokingAllowed": false,
+    "housekeepingStatus": "clean",
+    "detailTitle": "Standard City View - Ấm cúng cho cặp đôi",
+    "highlights": [
+      "Tặng 2 chai nước suối mỗi ngày",
+      "Phù hợp khách công tác ngắn ngày",
+      "Cửa sổ lớn đón ánh sáng tự nhiên"
+    ],
+    "roomFeatures": [
+      "Bàn làm việc",
+      "Đèn đọc sách đầu giường",
+      "Rèm cản sáng",
+      "Ổ cắm gần giường",
+      "Tủ quần áo"
+    ],
+    "bathroomFeatures": [
+      "Phòng tắm riêng",
+      "Vòi sen nước nóng",
+      "Khăn tắm",
+      "Đồ vệ sinh cá nhân"
+    ],
+    "policies": [
+      "Không hút thuốc trong phòng",
+      "Không mang thú cưng",
+      "Tối đa 2 người lớn"
+    ],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "breakfastIncluded": true,
+    "cancellationPolicy": "Miễn phí hủy trước 24 giờ so với thời gian nhận phòng.",
+    "extraServices": [
+      "Giặt ủi",
+      "Thuê xe máy",
+      "Đưa đón sân bay có tính phí"
+    ]
+  },
+  {
+    "roomNumber": "103",
+    "type": "Standard",
+    "pricePerNight": 520000,
+    "capacity": 2,
+    "floor": 1,
+    "sizeSqm": 25,
+    "bedType": "Twin",
+    "view": "Garden",
+    "amenities": [
+      "WiFi",
+      "TV",
+      "Máy lạnh",
+      "Tủ quần áo",
+      "Máy sấy tóc"
+    ],
+    "images": [
+      "assets/rooms/standard-4.jpg",
+      "assets/rooms/standard-1.jpg",
+      "assets/rooms/standard-3.jpg",
+      "assets/rooms/standard-2.jpg"
+    ],
+    "status": "available",
+    "description": "Phòng 2 giường đơn phù hợp bạn bè hoặc đồng nghiệp đi công tác.",
+    "imageUrl": "assets/rooms/standard-4.jpg",
+    "discountPercent": 0,
+    "isSmokingAllowed": false,
+    "housekeepingStatus": "clean",
+    "detailTitle": "Standard Garden View - Yên tĩnh và dễ chịu",
+    "highlights": [
+      "Hướng vườn thoáng mát",
+      "2 giường đơn linh hoạt",
+      "Phù hợp bạn bè hoặc đồng nghiệp"
+    ],
+    "roomFeatures": [
+      "Bàn trang điểm",
+      "Máy sấy tóc",
+      "Két mini",
+      "Tủ quần áo",
+      "Ấm đun nước"
+    ],
+    "bathroomFeatures": [
+      "Phòng tắm riêng",
+      "Gương lớn",
+      "Nước nóng lạnh",
+      "Khăn tắm cao cấp"
+    ],
+    "policies": [
+      "Không tổ chức tiệc trong phòng",
+      "Không hút thuốc",
+      "Tối đa 2 người lớn"
+    ],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "breakfastIncluded": false,
+    "cancellationPolicy": "Hủy trước 48 giờ để được hoàn tiền 100%.",
+    "extraServices": [
+      "Dọn phòng hằng ngày",
+      "Gọi đồ ăn tại phòng",
+      "Thuê xe đạp"
+    ]
+  },
+  {
+    "roomNumber": "202",
+    "type": "Deluxe",
+    "pricePerNight": 780000,
+    "capacity": 2,
+    "floor": 2,
+    "sizeSqm": 32,
+    "bedType": "Queen",
+    "view": "City",
+    "amenities": [
+      "WiFi",
+      "Smart TV",
+      "Mini bar",
+      "Két sắt",
+      "Bồn tắm đứng"
+    ],
+    "images": [
+      "assets/rooms/deluxe-1.jpg",
+      "assets/rooms/deluxe-2.jpg",
+      "assets/rooms/deluxe-3.jpg",
+      "assets/rooms/deluxe-4.jpg"
+    ],
+    "status": "available",
+    "description": "Phòng Deluxe hiện đại, rộng rãi, thích hợp cho cặp đôi hoặc khách công tác.",
+    "imageUrl": "assets/rooms/deluxe-1.jpg",
+    "discountPercent": 10,
+    "isSmokingAllowed": false,
+    "housekeepingStatus": "clean",
+    "detailTitle": "Deluxe City - Hiện đại cho chuyến đi thoải mái",
+    "highlights": [
+      "Không gian rộng 32m²",
+      "Thiết kế hiện đại",
+      "Giảm giá 10% khi đặt online"
+    ],
+    "roomFeatures": [
+      "Smart TV",
+      "Mini bar",
+      "Két sắt",
+      "Bàn làm việc lớn",
+      "Ghế thư giãn"
+    ],
+    "bathroomFeatures": [
+      "Buồng tắm kính",
+      "Vòi sen cao cấp",
+      "Bộ đồ dùng cá nhân đầy đủ",
+      "Máy sấy tóc"
+    ],
+    "policies": [
+      "Không hút thuốc",
+      "Có thể thêm 1 trẻ em dưới 6 tuổi",
+      "Không đem đồ dễ cháy nổ vào phòng"
+    ],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "breakfastIncluded": true,
+    "cancellationPolicy": "Hủy miễn phí trước 24 giờ, sau đó tính phí 1 đêm.",
+    "extraServices": [
+      "Buffet sáng",
+      "Dịch vụ in ấn",
+      "Đón tiễn sân bay"
+    ]
+  },
+  {
+    "roomNumber": "203",
+    "type": "Deluxe",
+    "pricePerNight": 820000,
+    "capacity": 3,
+    "floor": 2,
+    "sizeSqm": 34,
+    "bedType": "Queen",
+    "view": "Garden",
+    "amenities": [
+      "WiFi",
+      "Smart TV",
+      "Mini bar",
+      "Ban công",
+      "Bàn trà"
+    ],
+    "images": [
+      "assets/rooms/deluxe-3.jpg",
+      "assets/rooms/deluxe-1.jpg",
+      "assets/rooms/deluxe-4.jpg",
+      "assets/rooms/deluxe-2.jpg"
+    ],
+    "status": "available",
+    "description": "Phòng Deluxe có ban công và tầm nhìn sân vườn dễ chịu.",
+    "imageUrl": "assets/rooms/deluxe-3.jpg",
+    "discountPercent": 8,
+    "isSmokingAllowed": false,
+    "housekeepingStatus": "clean",
+    "detailTitle": "Deluxe Garden Balcony - Thư giãn với ban công riêng",
+    "highlights": [
+      "Ban công riêng nhìn ra sân vườn",
+      "Bàn trà thư giãn",
+      "Không gian phù hợp nghỉ dưỡng"
+    ],
+    "roomFeatures": [
+      "Ban công",
+      "Smart TV",
+      "Mini bar",
+      "Bàn trà",
+      "Ghế sofa đơn"
+    ],
+    "bathroomFeatures": [
+      "Phòng tắm kính",
+      "Nước nóng",
+      "Bộ amenities cao cấp",
+      "Áo choàng tắm"
+    ],
+    "policies": [
+      "Không hút thuốc trong phòng",
+      "Giữ yên lặng sau 22:00",
+      "Tối đa 3 khách"
+    ],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "breakfastIncluded": true,
+    "cancellationPolicy": "Miễn phí hủy trước 48 giờ.",
+    "extraServices": [
+      "Trang trí phòng sinh nhật",
+      "Đặt tour trong ngày",
+      "Set trà chiều"
+    ]
+  },
+  {
+    "roomNumber": "302",
+    "type": "Suite",
+    "pricePerNight": 1350000,
+    "capacity": 4,
+    "floor": 3,
+    "sizeSqm": 48,
+    "bedType": "King",
+    "view": "River",
+    "amenities": [
+      "WiFi",
+      "Sofa",
+      "Bồn tắm",
+      "Máy pha cà phê",
+      "Phòng khách nhỏ"
+    ],
+    "images": [
+      "assets/rooms/suite-1.jpg",
+      "assets/rooms/suite-2.jpg",
+      "assets/rooms/suite-3.jpg",
+      "assets/rooms/deluxe-4.jpg"
+    ],
+    "status": "available",
+    "description": "Phòng Suite cao cấp, rộng rãi, phù hợp gia đình nhỏ hoặc kỳ nghỉ sang trọng.",
+    "imageUrl": "assets/rooms/suite-1.jpg",
+    "discountPercent": 12,
+    "isSmokingAllowed": false,
+    "housekeepingStatus": "clean",
+    "detailTitle": "Suite River View - Sang trọng với không gian riêng",
+    "highlights": [
+      "Có khu vực phòng khách nhỏ",
+      "View sông thoáng đẹp",
+      "Phù hợp gia đình nhỏ"
+    ],
+    "roomFeatures": [
+      "Giường King",
+      "Sofa",
+      "Máy pha cà phê",
+      "Bàn ăn mini",
+      "Smart TV 55 inch"
+    ],
+    "bathroomFeatures": [
+      "Bồn tắm nằm",
+      "Buồng tắm riêng",
+      "2 lavabo",
+      "Gương đèn LED"
+    ],
+    "policies": [
+      "Không hút thuốc",
+      "Cho phép thêm giường phụ có phí",
+      "Tối đa 4 khách"
+    ],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "breakfastIncluded": true,
+    "cancellationPolicy": "Miễn phí hủy trước 72 giờ, sau đó tính phí 50% đêm đầu.",
+    "extraServices": [
+      "Butler theo yêu cầu",
+      "Minibar refill có phí",
+      "Late check-out tùy tình trạng phòng"
+    ]
+  },
+  {
+    "roomNumber": "402",
+    "type": "Family",
+    "pricePerNight": 1550000,
+    "capacity": 5,
+    "floor": 4,
+    "sizeSqm": 58,
+    "bedType": "Mixed",
+    "view": "City",
+    "amenities": [
+      "WiFi",
+      "2 TV",
+      "Bếp nhỏ",
+      "Tủ lạnh",
+      "Bàn ăn"
+    ],
+    "images": [
+      "assets/rooms/family-1.jpg",
+      "assets/rooms/family-2.jpg",
+      "assets/rooms/deluxe-2.jpg",
+      "assets/rooms/standard-2.jpg"
+    ],
+    "status": "available",
+    "description": "Phòng Family dành cho gia đình đông người, có không gian sinh hoạt chung.",
+    "imageUrl": "assets/rooms/family-1.jpg",
+    "discountPercent": 7,
+    "isSmokingAllowed": false,
+    "housekeepingStatus": "clean",
+    "detailTitle": "Family Room - Rộng rãi cho cả gia đình",
+    "highlights": [
+      "Diện tích lớn 58m²",
+      "Có khu vực sinh hoạt chung",
+      "Phù hợp gia đình 4-5 người"
+    ],
+    "roomFeatures": [
+      "2 TV",
+      "Bếp nhỏ",
+      "Tủ lạnh",
+      "Bàn ăn",
+      "Tủ đồ lớn"
+    ],
+    "bathroomFeatures": [
+      "Phòng tắm rộng",
+      "Nước nóng lạnh",
+      "Bộ khăn gia đình",
+      "Gương lớn"
+    ],
+    "policies": [
+      "Không hút thuốc",
+      "Trẻ em dưới 6 tuổi ở cùng bố mẹ miễn phí",
+      "Không mang vật nuôi"
+    ],
+    "checkInTime": "14:00",
+    "checkOutTime": "12:00",
+    "breakfastIncluded": true,
+    "cancellationPolicy": "Hủy trước 72 giờ để được hoàn tiền đầy đủ.",
+    "extraServices": [
+      "Nôi em bé theo yêu cầu",
+      "Bữa sáng gia đình",
+      "Dọn phòng 2 lần/ngày theo yêu cầu"
+    ]
+  }
+]
