@@ -64,7 +64,8 @@ async function seedRooms() {
       amenities: ["WiFi", "TV", "Máy lạnh", "Nước nóng"],
       images: ["assets/rooms/standard-1.jpg"],
       imageUrl: "assets/rooms/standard-1.jpg",
-      description: "Phòng tiêu chuẩn phù hợp cho cặp đôi hoặc khách công tác ngắn ngày.",
+      description:
+        "Phòng tiêu chuẩn phù hợp cho cặp đôi hoặc khách công tác ngắn ngày.",
       housekeepingStatus: "clean",
     },
     {
@@ -79,7 +80,8 @@ async function seedRooms() {
       amenities: ["WiFi", "TV", "Máy lạnh", "Bàn làm việc"],
       images: ["assets/rooms/standard-2.jpg"],
       imageUrl: "assets/rooms/standard-2.jpg",
-      description: "Phòng 2 giường đơn thoáng mát, phù hợp bạn bè hoặc đồng nghiệp.",
+      description:
+        "Phòng 2 giường đơn thoáng mát, phù hợp bạn bè hoặc đồng nghiệp.",
       housekeepingStatus: "clean",
     },
     {
@@ -305,11 +307,16 @@ async function seedSampleData() {
     });
   }
 
-  console.log("Đã tạo dữ liệu mẫu khách hàng, đặt phòng, thanh toán và đánh giá.");
+  console.log(
+    "Đã tạo dữ liệu mẫu khách hàng, đặt phòng, thanh toán và đánh giá.",
+  );
 }
 
 mongoose
-  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/HotelBookingDB")
+  .connect(
+    process.env.MONGO_URI ||
+      "mongodb+srv://vanvang100624_db_user:gWepNKs1YY0V27ql@cluster0.cvufiq1.mongodb.net/HotelBookingDB",
+  )
   .then(async () => {
     console.log("Kết nối MongoDB thành công");
     await seedDefaultAdmin();
@@ -339,7 +346,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Hotel Booking API Server" });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log(`Server đang chạy tại http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
