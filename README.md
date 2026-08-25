@@ -262,21 +262,3 @@ POST /api/auth/login
 ```
 
 ---
-
-## ⚠️ Lưu ý
-
-* Cần MongoDB để chạy project
-* Frontend hiện tại chỉ là giao diện cơ bản
-* API có thể test bằng Postman
-
----
-
-## 👨‍💻 Tác giả
-
-* GitHub: https://github.com/lqvanvv123
-
----
-
-## ⭐ Ghi chú
-
-Nếu thấy project hữu ích hãy ⭐ repo nhé!
