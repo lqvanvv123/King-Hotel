@@ -9,11 +9,11 @@ Dự án cung cấp các API để quản lý phòng, người dùng và đặt 
 
 ## 🚀 Công nghệ sử dụng
 
-* Node.js
-* Express.js
-* MongoDB (Mongoose)
-* JWT Authentication
-* RESTful API
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+- RESTful API
 
 ---
 
@@ -78,20 +78,6 @@ http://localhost:3000
 
 ---
 
-## 🌐 Deploy
-
-Dự án có thể deploy bằng:
-
-* Render
-* Railway
-* Vercel (frontend)
-
-👉 Link demo (sau khi deploy):
-
-```
-https://king-hotel.onrender.com
-```
-
 ---
 
 ## 📡 API mẫu
@@ -104,7 +90,7 @@ GET /api/rooms
 
 ### 📌 Tạo phòng mới
 
-```
+````
 POST /api/rooms
 ```# 🏨 King Hotel Management System
 
@@ -127,21 +113,23 @@ Dự án cung cấp các API để quản lý phòng, người dùng và đặt 
 
 ## 📂 Cấu trúc project
 
-```
+````
+
 King-Hotel/
 │
 ├── BackEnd/
-│   ├── models/        # Định nghĩa schema MongoDB
-│   ├── routes/        # API routes
-│   ├── controllers/   # Xử lý logic
-│   ├── config/        # Kết nối database
-│   └── server.js      # File chạy chính
+│ ├── models/ # Định nghĩa schema MongoDB
+│ ├── routes/ # API routes
+│ ├── controllers/ # Xử lý logic
+│ ├── config/ # Kết nối database
+│ └── server.js # File chạy chính
 │
-├── FrontEnd/          # Giao diện (HTML/CSS/JS)
+├── FrontEnd/ # Giao diện (HTML/CSS/JS)
 │
 ├── package.json
 └── README.md
-```
+
+````
 
 ---
 
@@ -152,7 +140,7 @@ King-Hotel/
 ```bash
 git clone https://github.com/lqvanvv123/King-Hotel.git
 cd King-Hotel/BackEnd
-```
+````
 
 ### 2. Cài đặt dependencies
 
@@ -185,20 +173,6 @@ http://localhost:3000
 ```
 
 ---
-
-## 🌐 Deploy
-
-Dự án có thể deploy bằng:
-
-* Render
-* Railway
-* Vercel (frontend)
-
-👉 Link demo (sau khi deploy):
-
-```
-https://king-hotel.onrender.com
-```
 
 ---
 
@@ -232,33 +206,14 @@ POST /api/auth/login
 
 ## ⚠️ Lưu ý
 
-* Cần MongoDB để chạy project
-* Frontend hiện tại chỉ là giao diện cơ bản
-* API có thể test bằng Postman
+- Cần MongoDB để chạy project
+- Frontend hiện tại chỉ là giao diện cơ bản
+- API có thể test bằng Postman
 
 ---
 
 ## 👨‍💻 Tác giả
 
-* GitHub: https://github.com/lqvanvv123
+- GitHub: https://github.com/lqvanvv123
 
----
-
-## ⭐ Ghi chú
-
-Nếu thấy project hữu ích hãy ⭐ repo nhé!
-
-
-### 📌 Đăng ký user
-
-```
-POST /api/auth/register
-```
-
-### 📌 Đăng nhập
-
-```
-POST /api/auth/login
-```
-
----
+*

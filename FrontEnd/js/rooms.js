@@ -1,14 +1,23 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://king-hotel-ycsd.onrender.com/api";
 let rooms = [];
 let filteredRooms = [];
 let currentRoomId = null;
 const roomModalElement = document.getElementById("roomModal");
-const roomDetailAdminModalElement = document.getElementById("roomDetailAdminModal");
-const roomModal = roomModalElement ? new bootstrap.Modal(roomModalElement) : null;
-const roomDetailAdminModal = roomDetailAdminModalElement ? new bootstrap.Modal(roomDetailAdminModalElement) : null;
+const roomDetailAdminModalElement = document.getElementById(
+  "roomDetailAdminModal",
+);
+const roomModal = roomModalElement
+  ? new bootstrap.Modal(roomModalElement)
+  : null;
+const roomDetailAdminModal = roomDetailAdminModalElement
+  ? new bootstrap.Modal(roomDetailAdminModalElement)
+  : null;
 
 function formatCurrency(amount) {
-  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount || 0);
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount || 0);
 }
 
 function setText(id, value) {
@@ -23,14 +32,26 @@ function getStatusBadge(status) {
     occupied: '<span class="badge status-occupied">Đang ở</span>',
     maintenance: '<span class="badge status-maintenance">Bảo trì</span>',
   };
-  return statusMap[status] || `<span class="badge bg-secondary">${status || "N/A"}</span>`;
+  return (
+    statusMap[status] ||
+    `<span class="badge bg-secondary">${status || "N/A"}</span>`
+  );
 }
 
 function renderRoomSummary() {
   setText("roomTotalCount", rooms.length);
-  setText("roomAvailableCount", rooms.filter((room) => room.status === "available").length);
-  setText("roomOccupiedCount", rooms.filter((room) => room.status === "occupied").length);
-  setText("roomMaintenanceCount", rooms.filter((room) => room.status === "maintenance").length);
+  setText(
+    "roomAvailableCount",
+    rooms.filter((room) => room.status === "available").length,
+  );
+  setText(
+    "roomOccupiedCount",
+    rooms.filter((room) => room.status === "occupied").length,
+  );
+  setText(
+    "roomMaintenanceCount",
+    rooms.filter((room) => room.status === "maintenance").length,
+  );
 }
 
 function displayRooms(roomsData) {
@@ -56,9 +77,10 @@ function displayRooms(roomsData) {
 
   roomsData.forEach((room) => {
     const row = tbody.insertRow();
-    const amenityText = room.amenities && room.amenities.length
-      ? `${room.amenities.slice(0, 3).join(", ")}${room.amenities.length > 3 ? "..." : ""}`
-      : "Chưa cập nhật";
+    const amenityText =
+      room.amenities && room.amenities.length
+        ? `${room.amenities.slice(0, 3).join(", ")}${room.amenities.length > 3 ? "..." : ""}`
+        : "Chưa cập nhật";
 
     row.innerHTML = `
       <td><strong>${room.roomNumber}</strong></td>
@@ -72,13 +94,17 @@ function displayRooms(roomsData) {
           <a class="btn btn-sm btn-outline-secondary" href="room-detail.html?id=${encodeURIComponent(room._id)}">
             <i class="bi bi-eye"></i>
           </a>
-          ${isAdmin() ? `
+          ${
+            isAdmin()
+              ? `
           <button class="btn btn-sm btn-outline-primary" onclick="editRoom('${room._id}')">
             <i class="bi bi-pencil"></i>
           </button>
           <button class="btn btn-sm btn-outline-danger" onclick="deleteRoom('${room._id}')">
             <i class="bi bi-trash"></i>
-          </button>` : ""}
+          </button>`
+              : ""
+          }
         </div>
       </td>
     `;
@@ -88,7 +114,9 @@ function displayRooms(roomsData) {
 function applyFilters() {
   const status = document.getElementById("filterStatus")?.value || "";
   const type = document.getElementById("filterType")?.value || "";
-  const keyword = (document.getElementById("filterKeyword")?.value || "").trim().toLowerCase();
+  const keyword = (document.getElementById("filterKeyword")?.value || "")
+    .trim()
+    .toLowerCase();
 
   filteredRooms = rooms.filter((room) => {
     const matchStatus = !status || room.status === status;
@@ -152,7 +180,9 @@ async function editRoom(id) {
     document.getElementById("capacity").value = room.capacity;
     document.getElementById("roomStatus").value = room.status;
     document.getElementById("imageUrl").value = room.imageUrl || "";
-    document.getElementById("amenities").value = room.amenities ? room.amenities.join(", ") : "";
+    document.getElementById("amenities").value = room.amenities
+      ? room.amenities.join(", ")
+      : "";
     document.getElementById("description").value = room.description || "";
 
     roomModal?.show();
@@ -181,12 +211,18 @@ async function saveRoom() {
     capacity: parseInt(document.getElementById("capacity").value, 10),
     status: document.getElementById("roomStatus").value,
     imageUrl: document.getElementById("imageUrl").value,
-    amenities: document.getElementById("amenities").value.split(",").map((item) => item.trim()).filter(Boolean),
+    amenities: document
+      .getElementById("amenities")
+      .value.split(",")
+      .map((item) => item.trim())
+      .filter(Boolean),
     description: document.getElementById("description").value,
   };
 
   try {
-    const url = currentRoomId ? `${API_URL}/rooms/${currentRoomId}` : `${API_URL}/rooms`;
+    const url = currentRoomId
+      ? `${API_URL}/rooms/${currentRoomId}`
+      : `${API_URL}/rooms`;
     const method = currentRoomId ? "PUT" : "POST";
     const response = await authFetch(url, {
       method,
@@ -197,7 +233,11 @@ async function saveRoom() {
     if (response.ok) {
       roomModal?.hide();
       await loadRooms();
-      alert(currentRoomId ? "Cập nhật phòng thành công!" : "Thêm phòng mới thành công!");
+      alert(
+        currentRoomId
+          ? "Cập nhật phòng thành công!"
+          : "Thêm phòng mới thành công!",
+      );
     } else {
       const error = await response.json();
       alert(error.message || "Có lỗi xảy ra");
@@ -217,7 +257,9 @@ async function deleteRoom(id) {
   if (!confirm("Bạn có chắc chắn muốn xóa phòng này?")) return;
 
   try {
-    const response = await authFetch(`${API_URL}/rooms/${id}`, { method: "DELETE" });
+    const response = await authFetch(`${API_URL}/rooms/${id}`, {
+      method: "DELETE",
+    });
     if (response.ok) {
       await loadRooms();
       alert("Xóa phòng thành công!");
@@ -253,30 +295,46 @@ function escapeHtml(text) {
 }
 
 function renderRoomGallery(room, carouselId) {
-  const imageList = (room.images && room.images.length ? room.images : [room.imageUrl]).filter(Boolean);
+  const imageList = (
+    room.images && room.images.length ? room.images : [room.imageUrl]
+  ).filter(Boolean);
   if (!imageList.length) {
     return `<img src="assets/rooms/standard-1.jpg" alt="Room" class="img-fluid rounded shadow-sm" style="width:100%;max-height:320px;object-fit:cover;">`;
   }
 
-  const indicators = imageList.map((_, index) => `
+  const indicators = imageList
+    .map(
+      (_, index) => `
     <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ""} aria-label="Slide ${index + 1}"></button>
-  `).join("");
+  `,
+    )
+    .join("");
 
-  const items = imageList.map((img, index) => `
+  const items = imageList
+    .map(
+      (img, index) => `
     <div class="carousel-item ${index === 0 ? "active" : ""}">
       <img src="${img}" class="d-block w-100 rounded" alt="Phòng ${escapeHtml(room.roomNumber)} - ảnh ${index + 1}" style="height:320px;object-fit:cover;">
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 
-  const thumbs = imageList.map((img, index) => `
+  const thumbs = imageList
+    .map(
+      (img, index) => `
     <img src="${img}" alt="thumb-${index + 1}" class="rounded border" style="width:88px;height:64px;object-fit:cover;cursor:pointer;" data-bs-target="#${carouselId}" data-bs-slide-to="${index}">
-  `).join("");
+  `,
+    )
+    .join("");
 
   return `
     <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
       <div class="carousel-indicators">${indicators}</div>
       <div class="carousel-inner shadow-sm">${items}</div>
-      ${imageList.length > 1 ? `
+      ${
+        imageList.length > 1
+          ? `
       <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Previous</span>
@@ -284,7 +342,9 @@ function renderRoomGallery(room, carouselId) {
       <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
         <span class="carousel-control-next-icon"></span>
         <span class="visually-hidden">Next</span>
-      </button>` : ""}
+      </button>`
+          : ""
+      }
     </div>
     <div class="d-flex flex-wrap gap-2 mt-3">${thumbs}</div>
   `;
@@ -297,7 +357,12 @@ function viewRoomDetail(id) {
     return;
   }
 
-  const statusMap = { available: "Còn trống", booked: "Đã đặt", occupied: "Đang ở", maintenance: "Bảo trì" };
+  const statusMap = {
+    available: "Còn trống",
+    booked: "Đã đặt",
+    occupied: "Đang ở",
+    maintenance: "Bảo trì",
+  };
 
   document.getElementById("roomDetailAdminBody").innerHTML = `
     <div class="row g-4">
@@ -326,5 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ["filterStatus", "filterType"].forEach((id) => {
     document.getElementById(id)?.addEventListener("change", applyFilters);
   });
-  document.getElementById("filterKeyword")?.addEventListener("input", applyFilters);
+  document
+    .getElementById("filterKeyword")
+    ?.addEventListener("input", applyFilters);
 });

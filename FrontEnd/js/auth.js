@@ -1,4 +1,4 @@
-const AUTH_API_URL = "http://localhost:3000/api/auth";
+const AUTH_API_URL = "https://king-hotel-ycsd.onrender.com/api/auth";
 
 function isUserDirectoryPage() {
   return /\/User\//.test(window.location.pathname);
@@ -10,7 +10,11 @@ function resolveTopLevelPath(page) {
 
 function resolveAssetPath(path) {
   if (!path) return path;
-  if (/^(https?:)?\/\//.test(path) || path.startsWith("data:") || path.startsWith("/")) {
+  if (
+    /^(https?:)?\/\//.test(path) ||
+    path.startsWith("data:") ||
+    path.startsWith("/")
+  ) {
     return path;
   }
   if (isUserDirectoryPage() && /^(assets|css|js|data)\//.test(path)) {
@@ -94,7 +98,12 @@ function updateAuthNavbar() {
     registerNavItem.classList.add("d-none");
     logoutNavItem.classList.remove("d-none");
     if (userNameNav && user) {
-      const roleLabel = user.role === "admin" ? "Admin" : user.role === "customer" ? "Khách hàng" : "Nhân viên";
+      const roleLabel =
+        user.role === "admin"
+          ? "Admin"
+          : user.role === "customer"
+            ? "Khách hàng"
+            : "Nhân viên";
       userNameNav.textContent = `${user.fullName} (${roleLabel})`;
     }
   } else {
@@ -105,9 +114,19 @@ function updateAuthNavbar() {
 }
 
 function protectPage() {
-  const adminOnlyPages = ["index.html", "customers.html", "dashboard.html", "bookings.html"];
+  const adminOnlyPages = [
+    "index.html",
+    "customers.html",
+    "dashboard.html",
+    "bookings.html",
+  ];
   const customerOnlyPages = ["indexUser.html", "room-list.html"];
-  const loggedInPages = ["rooms.html", "room-detail.html", ...adminOnlyPages, ...customerOnlyPages];
+  const loggedInPages = [
+    "rooms.html",
+    "room-detail.html",
+    ...adminOnlyPages,
+    ...customerOnlyPages,
+  ];
   const currentPage = window.location.pathname.split("/").pop() || "index.html";
 
   if (loggedInPages.includes(currentPage) && !isLoggedIn()) {
@@ -122,7 +141,11 @@ function protectPage() {
     return;
   }
 
-  if (customerOnlyPages.includes(currentPage) && isLoggedIn() && !isCustomer()) {
+  if (
+    customerOnlyPages.includes(currentPage) &&
+    isLoggedIn() &&
+    !isCustomer()
+  ) {
     window.location.href = "index.html";
   }
 }
@@ -140,9 +163,19 @@ function applyRolePermissions() {
   });
 
   document.querySelectorAll("[data-role-label]").forEach((element) => {
-    const roleLabel = user.role === "admin" ? "Quyền: Admin" : user.role === "customer" ? "Vai trò: Khách hàng" : "Quyền: Nhân viên";
+    const roleLabel =
+      user.role === "admin"
+        ? "Quyền: Admin"
+        : user.role === "customer"
+          ? "Vai trò: Khách hàng"
+          : "Quyền: Nhân viên";
     element.textContent = roleLabel;
-    element.className = user.role === "admin" ? "badge bg-danger" : user.role === "customer" ? "badge bg-success" : "badge bg-info";
+    element.className =
+      user.role === "admin"
+        ? "badge bg-danger"
+        : user.role === "customer"
+          ? "badge bg-success"
+          : "badge bg-info";
   });
 }
 
@@ -157,13 +190,22 @@ if (registerForm) {
     const idCard = document.getElementById("registerIdCard").value.trim();
     const address = document.getElementById("registerAddress").value.trim();
     const password = document.getElementById("registerPassword").value.trim();
-    const confirmPassword = document.getElementById("registerConfirmPassword").value.trim();
+    const confirmPassword = document
+      .getElementById("registerConfirmPassword")
+      .value.trim();
     const message = document.getElementById("registerMessage");
 
     message.textContent = "";
     message.className = "alert d-none";
 
-    if (!fullName || !email || !phone || !idCard || !password || !confirmPassword) {
+    if (
+      !fullName ||
+      !email ||
+      !phone ||
+      !idCard ||
+      !password ||
+      !confirmPassword
+    ) {
       message.textContent = "Vui lòng nhập đầy đủ thông tin.";
       message.className = "alert alert-danger";
       return;
@@ -185,7 +227,15 @@ if (registerForm) {
       const response = await fetch(`${AUTH_API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName, email, phone, idCard, address, password, confirmPassword }),
+        body: JSON.stringify({
+          fullName,
+          email,
+          phone,
+          idCard,
+          address,
+          password,
+          confirmPassword,
+        }),
       });
 
       const data = await response.json();
@@ -196,7 +246,8 @@ if (registerForm) {
         return;
       }
 
-      message.textContent = "Đăng ký thành công. Đang chuyển sang trang đăng nhập...";
+      message.textContent =
+        "Đăng ký thành công. Đang chuyển sang trang đăng nhập...";
       message.className = "alert alert-success";
 
       setTimeout(() => {
@@ -249,7 +300,8 @@ if (loginForm) {
       message.className = "alert alert-success";
 
       setTimeout(() => {
-        window.location.href = data.user.role === "customer" ? "indexUser.html" : "index.html";
+        window.location.href =
+          data.user.role === "customer" ? "indexUser.html" : "index.html";
       }, 800);
     } catch (error) {
       message.textContent = "Không thể kết nối đến server.";

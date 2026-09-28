@@ -1,8 +1,11 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://king-hotel-ycsd.onrender.com/api";
 let activeBookings = [];
 
 function formatCurrency(amount) {
-  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount || 0);
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount || 0);
 }
 
 function setText(id, value) {
@@ -33,13 +36,18 @@ async function loadActiveBookings() {
     const allBookings = await response.json();
 
     activeBookings = Array.isArray(allBookings)
-      ? allBookings.filter((booking) => ["confirmed", "checked-in"].includes(booking.status))
+      ? allBookings.filter((booking) =>
+          ["confirmed", "checked-in"].includes(booking.status),
+        )
       : [];
 
     setText("dashboardActiveCount", `${activeBookings.length} đơn`);
     setText(
       "dashboardLatestRefresh",
-      new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })
+      new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     );
 
     displayActiveBookings(activeBookings);
@@ -53,7 +61,10 @@ function getStatusBadge(status) {
     confirmed: '<span class="badge status-confirmed">Đã xác nhận</span>',
     "checked-in": '<span class="badge status-checked-in">Đang lưu trú</span>',
   };
-  return statusMap[status] || `<span class="badge bg-secondary">${status || "N/A"}</span>`;
+  return (
+    statusMap[status] ||
+    `<span class="badge bg-secondary">${status || "N/A"}</span>`
+  );
 }
 
 function displayActiveBookings(bookingsData) {
@@ -78,9 +89,15 @@ function displayActiveBookings(bookingsData) {
 
   bookingsData.forEach((booking) => {
     const row = tbody.insertRow();
-    const checkIn = booking.checkInDate ? new Date(booking.checkInDate).toLocaleDateString("vi-VN") : "--";
-    const checkOut = booking.checkOutDate ? new Date(booking.checkOutDate).toLocaleDateString("vi-VN") : "--";
-    const customerName = booking.customerId ? booking.customerId.fullName : "N/A";
+    const checkIn = booking.checkInDate
+      ? new Date(booking.checkInDate).toLocaleDateString("vi-VN")
+      : "--";
+    const checkOut = booking.checkOutDate
+      ? new Date(booking.checkOutDate).toLocaleDateString("vi-VN")
+      : "--";
+    const customerName = booking.customerId
+      ? booking.customerId.fullName
+      : "N/A";
     const roomNumber = booking.roomId ? booking.roomId.roomNumber : "N/A";
 
     let actionButtons = "";

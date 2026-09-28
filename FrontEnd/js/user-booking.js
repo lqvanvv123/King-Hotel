@@ -1,4 +1,4 @@
-const CUSTOMER_API_URL = "http://localhost:3000/api";
+const CUSTOMER_API_URL = "https://king-hotel-ycsd.onrender.com/api";
 let customerRooms = [];
 let customerBookingsCache = [];
 
@@ -18,7 +18,8 @@ function calculateCustomerNights(checkInDate, checkOutDate) {
 
 function renderCustomerProfile() {
   const user = getCurrentUser();
-  document.getElementById("profileFullName").textContent = user?.fullName || "-";
+  document.getElementById("profileFullName").textContent =
+    user?.fullName || "-";
   document.getElementById("profileEmail").textContent = user?.email || "-";
 }
 
@@ -31,7 +32,9 @@ function scrollToBookingSearch() {
 
 async function loadCustomerRooms() {
   try {
-    const response = await authFetch(`${CUSTOMER_API_URL}/rooms?status=available`);
+    const response = await authFetch(
+      `${CUSTOMER_API_URL}/rooms?status=available`,
+    );
     customerRooms = await response.json();
     populateCustomerRoomSelect();
     renderCustomerRoomCards();
@@ -68,7 +71,8 @@ function renderCustomerRoomCards() {
   container.innerHTML = "";
 
   if (!customerRooms.length) {
-    container.innerHTML = '<div class="col-12"><div class="alert alert-warning mb-0">Hiện tại chưa có phòng trống để đặt.</div></div>';
+    container.innerHTML =
+      '<div class="col-12"><div class="alert alert-warning mb-0">Hiện tại chưa có phòng trống để đặt.</div></div>';
     return;
   }
 
@@ -80,7 +84,7 @@ function renderCustomerRoomCards() {
     col.innerHTML = `
       <article class="booking-room-card h-100">
         <div class="booking-room-image-wrap">
-          <img src="${typeof resolveAssetPath === "function" ? resolveAssetPath(room.imageUrl || "assets/rooms/standard-1.jpg") : (room.imageUrl || "assets/rooms/standard-1.jpg")}" class="booking-room-image" alt="${room.roomNumber}" />
+          <img src="${typeof resolveAssetPath === "function" ? resolveAssetPath(room.imageUrl || "assets/rooms/standard-1.jpg") : room.imageUrl || "assets/rooms/standard-1.jpg"}" class="booking-room-image" alt="${room.roomNumber}" />
           <span class="booking-room-badge">${room.type}</span>
         </div>
         <div class="booking-room-body">
@@ -127,11 +131,14 @@ function applyRoomFromQuery() {
   const checkOut = params.get("checkOut");
 
   if (checkIn) document.getElementById("customerCheckInDate").value = checkIn;
-  if (checkOut) document.getElementById("customerCheckOutDate").value = checkOut;
+  if (checkOut)
+    document.getElementById("customerCheckOutDate").value = checkOut;
 
   if (roomId) {
     const select = document.getElementById("customerRoomSelect");
-    const option = Array.from(select.options).find((item) => item.value === roomId);
+    const option = Array.from(select.options).find(
+      (item) => item.value === roomId,
+    );
     if (option) {
       select.value = roomId;
       scrollToBookingSearch();
@@ -165,13 +172,16 @@ function updateCustomerEstimatedTotal() {
   const nights = calculateCustomerNights(checkInDate, checkOutDate);
 
   if (!pricePerNight || nights <= 0) {
-    document.getElementById("customerEstimatedTotal").textContent = formatCurrencyVND(0);
+    document.getElementById("customerEstimatedTotal").textContent =
+      formatCurrencyVND(0);
     document.getElementById("customerEstimatedNights").textContent = "0 đêm";
     return;
   }
 
-  document.getElementById("customerEstimatedTotal").textContent = formatCurrencyVND(pricePerNight * nights);
-  document.getElementById("customerEstimatedNights").textContent = `${nights} đêm`;
+  document.getElementById("customerEstimatedTotal").textContent =
+    formatCurrencyVND(pricePerNight * nights);
+  document.getElementById("customerEstimatedNights").textContent =
+    `${nights} đêm`;
 }
 
 async function loadCustomerBookings() {
@@ -197,7 +207,7 @@ function updateCustomerOverviewStats() {
 
   if (activeBookingCountEl) {
     const activeCount = customerBookingsCache.filter((booking) =>
-      ["confirmed", "checked-in"].includes(booking.status)
+      ["confirmed", "checked-in"].includes(booking.status),
     ).length;
     activeBookingCountEl.textContent = activeCount;
   }
@@ -208,7 +218,8 @@ function renderCustomerBookings(bookings) {
   tbody.innerHTML = "";
 
   if (!bookings.length) {
-    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-4">Bạn chưa có đơn đặt phòng nào.</td></tr>';
+    tbody.innerHTML =
+      '<tr><td colspan="6" class="text-center text-muted py-4">Bạn chưa có đơn đặt phòng nào.</td></tr>';
     return;
   }
 
@@ -286,8 +297,10 @@ function setDefaultCustomerDates() {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  document.getElementById("customerCheckInDate").value = params.get("checkIn") || today.toISOString().split("T")[0];
-  document.getElementById("customerCheckOutDate").value = params.get("checkOut") || tomorrow.toISOString().split("T")[0];
+  document.getElementById("customerCheckInDate").value =
+    params.get("checkIn") || today.toISOString().split("T")[0];
+  document.getElementById("customerCheckOutDate").value =
+    params.get("checkOut") || tomorrow.toISOString().split("T")[0];
   updateCustomerEstimatedTotal();
 }
 
@@ -297,8 +310,16 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCustomerRooms();
   loadCustomerBookings();
 
-  document.getElementById("customerBookingForm").addEventListener("submit", createCustomerBooking);
-  document.getElementById("customerRoomSelect").addEventListener("change", updateCustomerEstimatedTotal);
-  document.getElementById("customerCheckInDate").addEventListener("change", updateCustomerEstimatedTotal);
-  document.getElementById("customerCheckOutDate").addEventListener("change", updateCustomerEstimatedTotal);
+  document
+    .getElementById("customerBookingForm")
+    .addEventListener("submit", createCustomerBooking);
+  document
+    .getElementById("customerRoomSelect")
+    .addEventListener("change", updateCustomerEstimatedTotal);
+  document
+    .getElementById("customerCheckInDate")
+    .addEventListener("change", updateCustomerEstimatedTotal);
+  document
+    .getElementById("customerCheckOutDate")
+    .addEventListener("change", updateCustomerEstimatedTotal);
 });

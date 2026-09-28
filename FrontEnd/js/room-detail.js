@@ -1,7 +1,10 @@
-const ROOM_DETAIL_API_URL = "http://localhost:3000/api";
+const ROOM_DETAIL_API_URL = "https://king-hotel-ycsd.onrender.com/api";
 
 function roomDetailCurrency(amount) {
-  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount || 0);
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount || 0);
 }
 
 function escapeHtml(text) {
@@ -19,35 +22,51 @@ function renderItems(items, emptyText = "Chưa cập nhật") {
 }
 
 function renderAmenityChips(items) {
-  if (!items || !items.length) return '<span>Chưa cập nhật</span>';
+  if (!items || !items.length) return "<span>Chưa cập nhật</span>";
   return items.map((item) => `<span>${escapeHtml(item)}</span>`).join("");
 }
 
 function renderRoomGallery(room, carouselId) {
-  const imageList = (room.images && room.images.length ? room.images : [room.imageUrl]).filter(Boolean);
+  const imageList = (
+    room.images && room.images.length ? room.images : [room.imageUrl]
+  ).filter(Boolean);
   if (!imageList.length) {
     return `<img src="${typeof resolveAssetPath === "function" ? resolveAssetPath("assets/rooms/standard-1.jpg") : "assets/rooms/standard-1.jpg"}" alt="Phòng ${escapeHtml(room.roomNumber)}" class="img-fluid rounded-4 shadow-sm" style="width:100%;max-height:460px;object-fit:cover;">`;
   }
 
-  const indicators = imageList.map((_, index) => `
+  const indicators = imageList
+    .map(
+      (_, index) => `
     <button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ""} aria-label="Slide ${index + 1}"></button>
-  `).join("");
+  `,
+    )
+    .join("");
 
-  const items = imageList.map((img, index) => `
+  const items = imageList
+    .map(
+      (img, index) => `
     <div class="carousel-item ${index === 0 ? "active" : ""}">
       <img src="${typeof resolveAssetPath === "function" ? resolveAssetPath(img) : img}" class="d-block w-100 rounded-4 room-detail-main-image" alt="Phòng ${escapeHtml(room.roomNumber)} - ảnh ${index + 1}">
     </div>
-  `).join("");
+  `,
+    )
+    .join("");
 
-  const thumbs = imageList.map((img, index) => `
+  const thumbs = imageList
+    .map(
+      (img, index) => `
     <img src="${typeof resolveAssetPath === "function" ? resolveAssetPath(img) : img}" class="room-detail-thumb" alt="thumbnail ${index + 1}" data-bs-target="#${carouselId}" data-bs-slide-to="${index}">
-  `).join("");
+  `,
+    )
+    .join("");
 
   return `
     <div id="${carouselId}" class="carousel slide" data-bs-ride="false">
       <div class="carousel-indicators">${indicators}</div>
       <div class="carousel-inner shadow-sm">${items}</div>
-      ${imageList.length > 1 ? `
+      ${
+        imageList.length > 1
+          ? `
       <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
         <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Previous</span>
@@ -55,7 +74,9 @@ function renderRoomGallery(room, carouselId) {
       <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
         <span class="carousel-control-next-icon"></span>
         <span class="visually-hidden">Next</span>
-      </button>` : ""}
+      </button>`
+          : ""
+      }
     </div>
     <div class="d-flex flex-wrap gap-2 mt-3">${thumbs}</div>
   `;
@@ -67,7 +88,10 @@ function configureNavbar() {
   const user = getCurrentUser();
 
   if (user?.role === "admin") {
-    brand.href = typeof resolveTopLevelPath === "function" ? resolveTopLevelPath("rooms.html") : "rooms.html";
+    brand.href =
+      typeof resolveTopLevelPath === "function"
+        ? resolveTopLevelPath("rooms.html")
+        : "rooms.html";
     brand.innerHTML = '<i class="bi bi-building"></i> HOTEL MANAGER';
     links.innerHTML = `
       <li class="nav-item"><a class="nav-link" href="${typeof resolveTopLevelPath === "function" ? resolveTopLevelPath("index.html") : "index.html"}"><i class="bi bi-house-door"></i> Trang chủ</a></li>
@@ -92,7 +116,8 @@ async function loadRoomDetailPage() {
   const container = document.getElementById("roomDetailPage");
 
   if (!roomId) {
-    container.innerHTML = '<div class="alert alert-danger">Thiếu mã phòng để xem chi tiết.</div>';
+    container.innerHTML =
+      '<div class="alert alert-danger">Thiếu mã phòng để xem chi tiết.</div>';
     return;
   }
 
@@ -112,8 +137,14 @@ async function loadRoomDetailPage() {
       maintenance: '<span class="badge text-bg-danger">Bảo trì</span>',
     };
 
-    const backLink = isAdmin() ? (typeof resolveTopLevelPath === "function" ? resolveTopLevelPath("rooms.html") : "rooms.html") : "room-list.html";
-    const backText = isAdmin() ? "Về quản lý phòng" : "Quay lại danh sách phòng";
+    const backLink = isAdmin()
+      ? typeof resolveTopLevelPath === "function"
+        ? resolveTopLevelPath("rooms.html")
+        : "rooms.html"
+      : "room-list.html";
+    const backText = isAdmin()
+      ? "Về quản lý phòng"
+      : "Quay lại danh sách phòng";
 
     const chooseQuery = new URLSearchParams({ roomId: room._id });
     if (checkIn) chooseQuery.set("checkIn", checkIn);
@@ -235,7 +266,8 @@ async function loadRoomDetailPage() {
     document.title = `Phòng ${room.roomNumber} - ${room.type}`;
   } catch (error) {
     console.error("Error loading room detail:", error);
-    container.innerHTML = '<div class="alert alert-danger">Không thể tải chi tiết phòng.</div>';
+    container.innerHTML =
+      '<div class="alert alert-danger">Không thể tải chi tiết phòng.</div>';
   }
 }
 

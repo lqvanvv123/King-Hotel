@@ -1,8 +1,11 @@
-const ROOM_LIST_API_URL = "http://localhost:3000/api";
+const ROOM_LIST_API_URL = "https://king-hotel-ycsd.onrender.com/api";
 let roomListCache = [];
 
 function formatRoomPrice(amount) {
-  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount || 0);
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount || 0);
 }
 
 function getRoomListParams() {
@@ -68,7 +71,9 @@ async function loadRoomList() {
   syncRoomListQueryString();
 
   try {
-    const response = await authFetch(`${ROOM_LIST_API_URL}/rooms?status=available`);
+    const response = await authFetch(
+      `${ROOM_LIST_API_URL}/rooms?status=available`,
+    );
     const rooms = await response.json();
     roomListCache = Array.isArray(rooms) ? rooms : [];
     const filtered = filterAndSortRooms(roomListCache);
@@ -83,7 +88,9 @@ async function loadRoomList() {
 
 function filterAndSortRooms(rooms) {
   const type = document.getElementById("filterType")?.value || "";
-  const capacity = Number(document.getElementById("filterCapacity")?.value || 0);
+  const capacity = Number(
+    document.getElementById("filterCapacity")?.value || 0,
+  );
   const maxPrice = Number(document.getElementById("filterPrice")?.value || 0);
   const view = document.getElementById("filterView")?.value || "";
   const breakfast = document.getElementById("filterBreakfast")?.value || "";
@@ -100,12 +107,20 @@ function filterAndSortRooms(rooms) {
   });
 
   filtered.sort((a, b) => {
-    if (sortBy === "priceAsc") return (a.pricePerNight || 0) - (b.pricePerNight || 0);
-    if (sortBy === "priceDesc") return (b.pricePerNight || 0) - (a.pricePerNight || 0);
+    if (sortBy === "priceAsc")
+      return (a.pricePerNight || 0) - (b.pricePerNight || 0);
+    if (sortBy === "priceDesc")
+      return (b.pricePerNight || 0) - (a.pricePerNight || 0);
     if (sortBy === "sizeDesc") return (b.sizeSqm || 0) - (a.sizeSqm || 0);
 
-    const scoreA = (a.breakfastIncluded ? 2 : 0) + (a.discountPercent ? 1 : 0) + (a.amenities?.length || 0);
-    const scoreB = (b.breakfastIncluded ? 2 : 0) + (b.discountPercent ? 1 : 0) + (b.amenities?.length || 0);
+    const scoreA =
+      (a.breakfastIncluded ? 2 : 0) +
+      (a.discountPercent ? 1 : 0) +
+      (a.amenities?.length || 0);
+    const scoreB =
+      (b.breakfastIncluded ? 2 : 0) +
+      (b.discountPercent ? 1 : 0) +
+      (b.amenities?.length || 0);
     return scoreB - scoreA;
   });
 
@@ -117,7 +132,8 @@ function renderRoomList(rooms) {
   container.innerHTML = "";
 
   if (!rooms.length) {
-    container.innerHTML = '<div class="alert alert-warning mb-0">Không có phòng phù hợp với bộ lọc hiện tại.</div>';
+    container.innerHTML =
+      '<div class="alert alert-warning mb-0">Không có phòng phù hợp với bộ lọc hiện tại.</div>';
     return;
   }
 
@@ -127,8 +143,18 @@ function renderRoomList(rooms) {
   rooms.forEach((room) => {
     const article = document.createElement("article");
     article.className = "room-result-card";
-    const amenities = room.amenities?.slice(0, 5).map((item) => `<span>${item}</span>`).join("") || "";
-    const highlights = room.highlights?.slice(0, 3).map((item) => `<li><i class="bi bi-check-circle-fill"></i> ${item}</li>`).join("") || "";
+    const amenities =
+      room.amenities
+        ?.slice(0, 5)
+        .map((item) => `<span>${item}</span>`)
+        .join("") || "";
+    const highlights =
+      room.highlights
+        ?.slice(0, 3)
+        .map(
+          (item) => `<li><i class="bi bi-check-circle-fill"></i> ${item}</li>`,
+        )
+        .join("") || "";
     const detailParams = new URLSearchParams({ id: room._id });
     if (checkIn) detailParams.set("checkIn", checkIn);
     if (checkOut) detailParams.set("checkOut", checkOut);
@@ -138,7 +164,7 @@ function renderRoomList(rooms) {
 
     article.innerHTML = `
       <div class="room-result-image-col">
-        <img src="${typeof resolveAssetPath === "function" ? resolveAssetPath(room.imageUrl || "assets/rooms/standard-1.jpg") : (room.imageUrl || "assets/rooms/standard-1.jpg")}" alt="Phòng ${room.roomNumber}" class="room-result-image">
+        <img src="${typeof resolveAssetPath === "function" ? resolveAssetPath(room.imageUrl || "assets/rooms/standard-1.jpg") : room.imageUrl || "assets/rooms/standard-1.jpg"}" alt="Phòng ${room.roomNumber}" class="room-result-image">
         <div class="room-result-image-tag">${room.type}</div>
       </div>
       <div class="room-result-content-col">
@@ -183,7 +209,13 @@ function renderRoomList(rooms) {
 }
 
 function resetRoomFilters() {
-  ["filterType", "filterCapacity", "filterPrice", "filterView", "filterBreakfast"].forEach((id) => {
+  [
+    "filterType",
+    "filterCapacity",
+    "filterPrice",
+    "filterView",
+    "filterBreakfast",
+  ].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.value = "";
   });
@@ -196,7 +228,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
-  if (!document.getElementById("searchCheckIn").value) document.getElementById("searchCheckIn").value = today.toISOString().split("T")[0];
-  if (!document.getElementById("searchCheckOut").value) document.getElementById("searchCheckOut").value = tomorrow.toISOString().split("T")[0];
+  if (!document.getElementById("searchCheckIn").value)
+    document.getElementById("searchCheckIn").value = today
+      .toISOString()
+      .split("T")[0];
+  if (!document.getElementById("searchCheckOut").value)
+    document.getElementById("searchCheckOut").value = tomorrow
+      .toISOString()
+      .split("T")[0];
   loadRoomList();
 });

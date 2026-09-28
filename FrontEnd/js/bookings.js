@@ -1,11 +1,14 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://king-hotel-ycsd.onrender.com/api";
 let bookings = [];
 let filteredBookings = [];
 let customers = [];
 let availableRooms = [];
 
 function formatCurrency(amount) {
-  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(amount || 0);
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount || 0);
 }
 
 function setText(id, value) {
@@ -28,14 +31,26 @@ function getStatusBadge(status) {
     "checked-out": '<span class="badge status-checked-out">Đã trả phòng</span>',
     cancelled: '<span class="badge status-cancelled">Đã hủy</span>',
   };
-  return statusMap[status] || `<span class="badge bg-secondary">${status || "N/A"}</span>`;
+  return (
+    statusMap[status] ||
+    `<span class="badge bg-secondary">${status || "N/A"}</span>`
+  );
 }
 
 function renderBookingSummary() {
   setText("bookingsTotalCount", bookings.length);
-  setText("bookingsConfirmedCount", bookings.filter((booking) => booking.status === "confirmed").length);
-  setText("bookingsCheckedInCount", bookings.filter((booking) => booking.status === "checked-in").length);
-  const totalRevenue = bookings.reduce((sum, booking) => sum + Number(booking.totalAmount || 0), 0);
+  setText(
+    "bookingsConfirmedCount",
+    bookings.filter((booking) => booking.status === "confirmed").length,
+  );
+  setText(
+    "bookingsCheckedInCount",
+    bookings.filter((booking) => booking.status === "checked-in").length,
+  );
+  const totalRevenue = bookings.reduce(
+    (sum, booking) => sum + Number(booking.totalAmount || 0),
+    0,
+  );
   setText("bookingsRevenueCount", formatCurrency(totalRevenue));
 }
 
@@ -72,7 +87,12 @@ async function loadAvailableRooms() {
         const option = document.createElement("option");
         option.value = room._id;
         option.dataset.price = room.pricePerNight;
-        const statusText = room.status === "booked" ? " - đã có lịch đặt" : room.status === "occupied" ? " - đang ở" : "";
+        const statusText =
+          room.status === "booked"
+            ? " - đã có lịch đặt"
+            : room.status === "occupied"
+              ? " - đang ở"
+              : "";
         option.textContent = `Phòng ${room.roomNumber} - ${room.type} - ${formatCurrency(room.pricePerNight)}/đêm${statusText}`;
         select.appendChild(option);
       });
@@ -117,9 +137,15 @@ function displayBookings(bookingsData) {
 
   bookingsData.forEach((booking) => {
     const row = tbody.insertRow();
-    const checkIn = booking.checkInDate ? new Date(booking.checkInDate).toLocaleDateString("vi-VN") : "--";
-    const checkOut = booking.checkOutDate ? new Date(booking.checkOutDate).toLocaleDateString("vi-VN") : "--";
-    const customerName = booking.customerId ? booking.customerId.fullName : "N/A";
+    const checkIn = booking.checkInDate
+      ? new Date(booking.checkInDate).toLocaleDateString("vi-VN")
+      : "--";
+    const checkOut = booking.checkOutDate
+      ? new Date(booking.checkOutDate).toLocaleDateString("vi-VN")
+      : "--";
+    const customerName = booking.customerId
+      ? booking.customerId.fullName
+      : "N/A";
     const roomNumber = booking.roomId ? booking.roomId.roomNumber : "N/A";
 
     let actionButtons = "";
@@ -158,7 +184,9 @@ function displayBookings(bookingsData) {
 }
 
 function applyBookingFilters() {
-  const keyword = (document.getElementById("bookingKeywordFilter")?.value || "").trim().toLowerCase();
+  const keyword = (document.getElementById("bookingKeywordFilter")?.value || "")
+    .trim()
+    .toLowerCase();
   const status = document.getElementById("bookingStatusFilter")?.value || "";
 
   filteredBookings = bookings.filter((booking) => {
@@ -221,14 +249,20 @@ async function createBooking(event) {
     });
 
     if (response.ok) {
-      alert("Tạo đơn đặt phòng thành công! Hệ thống đã tự tính tổng tiền và cập nhật trạng thái phòng.");
+      alert(
+        "Tạo đơn đặt phòng thành công! Hệ thống đã tự tính tổng tiền và cập nhật trạng thái phòng.",
+      );
       document.getElementById("bookingForm").reset();
 
       const today = new Date();
       const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
-      document.getElementById("checkInDate").value = today.toISOString().split("T")[0];
-      document.getElementById("checkOutDate").value = tomorrow.toISOString().split("T")[0];
+      document.getElementById("checkInDate").value = today
+        .toISOString()
+        .split("T")[0];
+      document.getElementById("checkOutDate").value = tomorrow
+        .toISOString()
+        .split("T")[0];
 
       await loadAvailableRooms();
       await loadBookings();
@@ -297,7 +331,9 @@ async function deleteBooking(id) {
   if (!confirm("Bạn có chắc chắn muốn xóa đơn đặt phòng này?")) return;
 
   try {
-    const response = await authFetch(`${API_URL}/bookings/${id}`, { method: "DELETE" });
+    const response = await authFetch(`${API_URL}/bookings/${id}`, {
+      method: "DELETE",
+    });
     if (response.ok) {
       alert("Xóa đơn đặt phòng thành công!");
       await loadAvailableRooms();
@@ -320,13 +356,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  document.getElementById("checkInDate").value = today.toISOString().split("T")[0];
-  document.getElementById("checkOutDate").value = tomorrow.toISOString().split("T")[0];
+  document.getElementById("checkInDate").value = today
+    .toISOString()
+    .split("T")[0];
+  document.getElementById("checkOutDate").value = tomorrow
+    .toISOString()
+    .split("T")[0];
 
-  document.getElementById("bookingForm")?.addEventListener("submit", createBooking);
+  document
+    .getElementById("bookingForm")
+    ?.addEventListener("submit", createBooking);
   ["roomSelect", "checkInDate", "checkOutDate"].forEach((id) => {
-    document.getElementById(id)?.addEventListener("change", updateEstimatedTotal);
+    document
+      .getElementById(id)
+      ?.addEventListener("change", updateEstimatedTotal);
   });
-  document.getElementById("bookingKeywordFilter")?.addEventListener("input", applyBookingFilters);
-  document.getElementById("bookingStatusFilter")?.addEventListener("change", applyBookingFilters);
+  document
+    .getElementById("bookingKeywordFilter")
+    ?.addEventListener("input", applyBookingFilters);
+  document
+    .getElementById("bookingStatusFilter")
+    ?.addEventListener("change", applyBookingFilters);
 });

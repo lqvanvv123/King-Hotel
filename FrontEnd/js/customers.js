@@ -1,9 +1,11 @@
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://king-hotel-ycsd.onrender.com/api";
 let customers = [];
 let filteredCustomers = [];
 let currentCustomerId = null;
 const customerModalElement = document.getElementById("customerModal");
-const customerModal = customerModalElement ? new bootstrap.Modal(customerModalElement) : null;
+const customerModal = customerModalElement
+  ? new bootstrap.Modal(customerModalElement)
+  : null;
 
 function setText(id, value) {
   const el = document.getElementById(id);
@@ -11,19 +13,31 @@ function setText(id, value) {
 }
 
 function formatDateTime(value) {
-  return new Date(value).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+  return new Date(value).toLocaleTimeString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 function renderCustomerSummary() {
   const now = new Date();
   const thisMonth = customers.filter((customer) => {
     const date = new Date(customer.createdAt);
-    return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+    return (
+      date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear()
+    );
   }).length;
 
   setText("customerTotalCount", customers.length);
-  setText("customerEmailCount", customers.filter((customer) => customer.email).length);
-  setText("customerAddressCount", customers.filter((customer) => customer.address).length);
+  setText(
+    "customerEmailCount",
+    customers.filter((customer) => customer.email).length,
+  );
+  setText(
+    "customerAddressCount",
+    customers.filter((customer) => customer.address).length,
+  );
   setText("customerThisMonthCount", thisMonth);
   setText("customerUpdatedAt", formatDateTime(new Date()));
 }
@@ -51,7 +65,9 @@ function displayCustomers(customersData) {
 
   customersData.forEach((customer) => {
     const row = tbody.insertRow();
-    const createdAt = customer.createdAt ? new Date(customer.createdAt).toLocaleDateString("vi-VN") : "--";
+    const createdAt = customer.createdAt
+      ? new Date(customer.createdAt).toLocaleDateString("vi-VN")
+      : "--";
 
     row.innerHTML = `
       <td><strong>${customer.fullName}</strong></td>
@@ -65,10 +81,14 @@ function displayCustomers(customersData) {
           <button class="btn btn-sm btn-outline-primary" onclick="editCustomer('${customer._id}')">
             <i class="bi bi-pencil"></i>
           </button>
-          ${isAdmin() ? `
+          ${
+            isAdmin()
+              ? `
           <button class="btn btn-sm btn-outline-danger" onclick="deleteCustomer('${customer._id}')">
             <i class="bi bi-trash"></i>
-          </button>` : ""}
+          </button>`
+              : ""
+          }
         </div>
       </td>
     `;
@@ -76,9 +96,17 @@ function displayCustomers(customersData) {
 }
 
 function applyCustomerFilter() {
-  const keyword = (document.getElementById("customerKeyword")?.value || "").trim().toLowerCase();
+  const keyword = (document.getElementById("customerKeyword")?.value || "")
+    .trim()
+    .toLowerCase();
   filteredCustomers = customers.filter((customer) => {
-    const haystack = [customer.fullName, customer.email, customer.phone, customer.idCard, customer.address]
+    const haystack = [
+      customer.fullName,
+      customer.email,
+      customer.phone,
+      customer.idCard,
+      customer.address,
+    ]
       .join(" ")
       .toLowerCase();
     return !keyword || haystack.includes(keyword);
@@ -142,7 +170,9 @@ async function saveCustomer() {
   };
 
   try {
-    const url = currentCustomerId ? `${API_URL}/customers/${currentCustomerId}` : `${API_URL}/customers`;
+    const url = currentCustomerId
+      ? `${API_URL}/customers/${currentCustomerId}`
+      : `${API_URL}/customers`;
     const method = currentCustomerId ? "PUT" : "POST";
     const response = await authFetch(url, {
       method,
@@ -153,7 +183,11 @@ async function saveCustomer() {
     if (response.ok) {
       customerModal?.hide();
       await loadCustomers();
-      alert(currentCustomerId ? "Cập nhật khách hàng thành công!" : "Thêm khách hàng mới thành công!");
+      alert(
+        currentCustomerId
+          ? "Cập nhật khách hàng thành công!"
+          : "Thêm khách hàng mới thành công!",
+      );
     } else {
       const error = await response.json();
       alert(error.message || "Có lỗi xảy ra");
@@ -173,7 +207,9 @@ async function deleteCustomer(id) {
   if (!confirm("Bạn có chắc chắn muốn xóa khách hàng này?")) return;
 
   try {
-    const response = await authFetch(`${API_URL}/customers/${id}`, { method: "DELETE" });
+    const response = await authFetch(`${API_URL}/customers/${id}`, {
+      method: "DELETE",
+    });
     if (response.ok) {
       await loadCustomers();
       alert("Xóa khách hàng thành công!");
@@ -195,5 +231,7 @@ function resetCustomerFilter() {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadCustomers();
-  document.getElementById("customerKeyword")?.addEventListener("input", applyCustomerFilter);
+  document
+    .getElementById("customerKeyword")
+    ?.addEventListener("input", applyCustomerFilter);
 });
